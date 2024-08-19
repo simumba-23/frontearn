@@ -1,38 +1,299 @@
 .App {
   text-align: center;
+  font-size: x-large;
+  background-color: burlywood;
+  padding: 20px;
+}
+/* HomePage css styling */
+.homepage {
+  font-family: Arial, sans-serif;
+  text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.header {
+  background-color: #FFDF00;
+  color: white;
+  padding: 20px 0;
+}
+.dash-header{
+  background-color: #FFDF00;
+  color: white;
+  padding: 20px 0;
+
+
+
+
+}
+/* Custom styles for the navbar */
+.navbar-brand {
+  font-size: 1.5rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.nav-link {
+  font-size: 1rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navbar-toggler-icon {
+  /* background-image: url('path-to-your-hamburger-icon.svg'); */
+}
+
+
+
+.navbar-brand span {
+  color: #9a3cbe;
+}
+
+.hero {
+  margin-top: 30px;
+}
+
+.hero h1 {
+  font-size: 2.5em;
+}
+
+.hero h1 span {
+  color: #494537;
+}
+
+.url-input {
+  width: 50%;
+  margin: 20px auto;
+  padding: 10px;
+}
+
+.steps {
+  background-color: #f8f9fa;
+  padding: 50px 0;
+}
+
+.steps h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.steps h3 {
+  font-size: 1.5em;
+  margin-bottom: 40px;
+}
+
+.step {
+  text-align: center;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin: 20px 0;
+}
+
+.step img {
+  width: 100px;
+  height: auto;
+}
+
+.step-number {
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: #4b0082;
+}
+
+.why-join {
+  background-color: #f8f9fa;
+  padding: 50px 0;
+}
+
+.why-join h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.why-join h3 {
+  font-size: 1.5em;
+  margin-bottom: 40px;
+}
+
+.join-item {
+  text-align: center;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.join-item i {
+  font-size: 3em;
+  color: #4b0082;
+  margin-bottom: 10px;
+}
+
+/* Admin transactions Card styling */
+.capital{
+  background-color: rgb(67, 150, 122);
+  color:#FFF;
+
+}
+.expenses{
+  background-color:rgb(0, 153, 255) ;
+  color:#FFF
+}
+ 
+.stock{
+  background-color: rgba(128, 128, 128, 0.404);
+  color:#fff
+}
+.used{
+  background-color: rgb(0, 77, 128);
+  color:#fff
+}
+.points{
+  background-color: rgb(51, 233, 233);
+  color:#fff
+
+}
+.virtual_money{
+  background-color: gainsboro;
+  color:#fff
+
+}
+.completion{
+  background-color: tomato;
+  color:#fff
+}
+.transaction{
+  background-color: orangered;
+  color:#fff
+
+}
+/* Categorys stylings */
+.video{
+  background-color: rgb(8, 247, 167);
+  padding: 20px;
+  margin-top:5px ;
+  color:#fff
+
+}
+.music{
+  background-color: #fa800d;
+  padding: 20px;
+  margin-top: 5px;
+  color:#fff
+
+}
+
+.podcast{
+  background-color: #0dc3fa;
+  padding: 20px;
+  margin-top: 5px;
+  color:#fff
+
+}
+.addTask{
+  background-color: #6faf82;
+  padding: 20px;
+  margin-top: 5px;
+  color:#fff;
+  border-radius: 10px;
+
+  
+  
+}
+.item{
+  justify-content: space-between;
+  
+  max-width: 4;
+}
+/* laoding spinner */
+.spinner-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  height: 100vh;
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+/* footer */
+.footer {
+  background-color: #343a40;
+  color: white;
+  padding: 20px 0;
+}
+
+.footer .social-icons a {
+  font-size: 1.5rem;
+  margin-right: 15px;
+}
+
+.footer .list-unstyled li {
+  margin-bottom: 10px;
+}
+
+.footer .text-center p {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+/* Default (Light Mode) */
+body {
+  background-color: white;
+  color: black;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  background-color: black;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* video playing */
+.video-thumbnail {
+  cursor: pointer;
+  position: relative;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.play-button::before {
+  content: "";
+  border-style: solid;
+  border-width: 15px 0 15px 25px;
+  border-color: transparent transparent transparent #fff;
+}
+.video-thumbnail {
+  cursor: pointer;
+  position: relative;
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.play-button::before {
+  content: "";
+  border-style: solid;
+  border-width: 15px 0 15px 25px;
+  border-color: transparent transparent transparent #fff;
 }

@@ -1,0 +1,26 @@
+.floating-player {
+    position: relative;
+    bottom: 20px;
+    right: 20px;
+    width: 100%;
+    /* height: ; */
+
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    /* overflow: hidden; */
+}
+
+.player-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+}
+
+.player-body {
+    padding: 10px;
+}

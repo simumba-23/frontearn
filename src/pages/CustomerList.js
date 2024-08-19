@@ -7,7 +7,7 @@ const CustomerList = () => {
     const [customers, setCustomers] = useState([]);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/customers')
+        axios.get('https://earn-app.onrender.com/api/customers')
             .then(response => {
                 setCustomers(response.data);
             })

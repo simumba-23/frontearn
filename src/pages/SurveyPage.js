@@ -8,7 +8,7 @@ const SurveyPage = () => {
 
     const fetchSurvey = async (task) => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/survey/${task.id}`)
+            const response = await axios.get(`https://earn-app.onrender.com/api/survey/${task.id}`)
 
             setSurvey(response.data)
             console.log('Survey data:', response.data)

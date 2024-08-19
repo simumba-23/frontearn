@@ -24,8 +24,8 @@ const CreateBlog = () => {
         const fetchCategoriesAndTags = async () => {
             try {
                 const [categoriesResponse, tagsResponse] = await Promise.all([
-                    axios.get('http://127.0.0.1:8000/api/categories'),
-                    axios.get('http://127.0.0.1:8000/api/tags')
+                    axios.get('https://earn-app.onrender.com/api/categories'),
+                    axios.get('https://earn-app.onrender.com/api/tags')
                 ]);
                 setCategories(categoriesResponse.data);
                 setTags(tagsResponse.data);

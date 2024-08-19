@@ -17,7 +17,7 @@ const TaskDetails = () => {
     useEffect(() => {
         const fetchTask = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/task/${taskId}/task_detail`)
+                const response = await axios.get(`https://earn-app.onrender.com/api/task/${taskId}/task_detail`)
                 setTask(response.data)
                 setMediaUrl(response.data.media_url);
                 console.log(response.data)

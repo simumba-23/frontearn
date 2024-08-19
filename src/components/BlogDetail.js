@@ -8,7 +8,7 @@ const BlogDetail = () => {
     const [blog, setBlog] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/api/blogs/${id}/`)
+        axios.get(`https://earn-app.onrender.com/api/blogs/${id}/`)
             .then(response => {
                 setBlog(response.data);
             })

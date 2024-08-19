@@ -14,7 +14,7 @@ const AdminTaskList = ({ taskType, filterCondition }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/tasks/${taskType ? taskType : ''}`)
+                const response = await axios.get(`https://earn-app.onrender.com/api/tasks/${taskType ? taskType : ''}`)
                 setTasks(response.data)
                 setLoading(false)
             } catch (error) {

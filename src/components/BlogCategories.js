@@ -8,7 +8,7 @@ export const BlogCategories = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/categories');
+                const response = await axios.get('https://earn-app.onrender.com/api/categories');
                 setCategories(response.data);
             } catch (error) {
                 console.error('error:', error);

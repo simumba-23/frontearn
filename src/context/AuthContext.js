@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
 
     const loginUser = async (e) => {
         e.preventDefault();
-        const response = await fetch('http://127.0.0.1:8000/api/token/', {
+        const response = await fetch('https://earn-app.onrender.com/api/token/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }) => {
         const interval = setInterval(() => {
             if (authTokens) {
                 const updateToken = async () => {
-                    const response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+                    const response = await fetch('https://earn-app.onrender.com/api/token/refresh/', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

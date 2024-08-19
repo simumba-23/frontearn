@@ -16,7 +16,7 @@ const BlogList = () => {
         const fetchBlogs = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/blogs?page=${currentPage}&limit=10`);
+                const response = await axios.get(`https://earn-app.onrender.com/api/blogs?page=${currentPage}&limit=10`);
                 setBlogs(response.data.results); // Adjust based on the response structure
                 setTotalPages(response.data.total_pages); // Adjust based on the response structure
             } catch (error) {

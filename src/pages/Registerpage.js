@@ -45,7 +45,7 @@ function Registerpage() {
             });
 
             try {
-                await axios.post('http://127.0.0.1:8000/api/register', formDataToSend, {
+                await axios.post('https://earn-app.onrender.com/api/register', formDataToSend, {
                     headers: {
                         "Content-Type": 'multipart/form-data'
                     }

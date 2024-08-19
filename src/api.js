@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { useContext } from 'react';
 import AuthContext from './context/AuthContext';
-const API_URL = 'http://127.0.0.1:8000/api'; // Change this to your backend URL
+const API_URL = 'https://earn-app.onrender.com/api'; // Change this to your backend URL
 
 const useAxios = () => {
     const { authTokens, logoutUser } = useContext(AuthContext);
@@ -35,7 +35,7 @@ const useAxios = () => {
             const originalRequest = error.config;
             if (error.response.status === 401 && !originalRequest._retry) {
                 originalRequest._retry = true;
-                const response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+                const response = await fetch('https://earn-app.onrender.com/api/token/refresh/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

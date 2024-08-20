@@ -15,8 +15,7 @@ function Registerpage() {
         confirm_password: '',
         sex: '',
         phone_number: '',
-        role: 'customer',
-        admin_code: '', // Only needed if registering as an admin
+        // Only needed if registering as an admin
     });
 
     const [loading, setLoading] = useState(false);
@@ -32,12 +31,6 @@ function Registerpage() {
         const errors = {};
         if (formData.password !== formData.confirm_password) {
             errors.password = "Passwords do not match.";
-        }
-        if (formData.role === 'admin' && formData.admin_code !== 'CARDO_45') {
-            errors.admin_code = "Invalid admin code. try as customer";
-        }
-        if (!formData.role) {
-            errors.role = "Role is required.";
         }
         return errors;
     };
@@ -57,8 +50,8 @@ function Registerpage() {
                 const response = await axios.post('https://earn-app.onrender.com/api/register', formDataToSend, {
                     headers: { "Content-Type": 'multipart/form-data' }
                 });
-                const { username, role } = response.data;
-                toast.success(`User ${username} registered as ${role} successfully.`);
+                const { username } = response.data;
+                toast.success(`User ${username} registered successfully.`);
                 
                 setFormData({
                     first_name: '',
@@ -69,8 +62,6 @@ function Registerpage() {
                     confirm_password: '',
                     sex: '',
                     phone_number: '',
-                    role: '',
-                    admin_code: '' // Reset the admin code
                 });
                 navigate('/Login');
             } catch (error) {
@@ -192,33 +183,7 @@ function Registerpage() {
                                             <option value="Female">Female</option>
                                         </Form.Control>
                                     </FormGroup>
-                                    <Form.Group controlId="Role">
-                                        <Form.Label>Role:</Form.Label>
-                                        <Form.Control
-                                            as="select"
-                                            name="role"
-                                            value={formData.role}
-                                            onChange={handleChange}
-                                            required
-                                        >
-                                            <option value="customer">Customer</option>
-                                            <option value="admin">Admin</option>
-                                        </Form.Control>
-                                        {errors.role && <p className="text-danger">{errors.role}</p>}
-                                    </Form.Group>
-                                    {formData.role === 'admin' && (
-                                        <Form.Group controlId="AdminCode">
-                                            <Form.Label>Admin Code:</Form.Label>
-                                            <FormControl 
-                                                type="text"
-                                                name="admin_code"
-                                                placeholder="Admin Code"
-                                                value={formData.admin_code}
-                                                onChange={handleChange}
-                                            />
-                                            {errors.admin_code && <p className="text-danger">{errors.admin_code}</p>}
-                                        </Form.Group>
-                                    )}
+                                    
                                     <Button variant="primary" type="submit" className="mt-3 w-100" disabled={loading}>
                                         {loading ? 'Registering ...' : 'Register'}
                                     </Button>

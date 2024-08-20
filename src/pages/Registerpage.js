@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Button, Card, Form, FormControl,FormGroup, Container, Row, Col, Image, Spinner,FormLabel } from 'react-bootstrap';
-import loginlogo from '../Assets/loginlogo.png';
-import simumba from '../Assets/toolsharingsimumba.png';
+import { Button, Card, Form, FormControl, FormGroup, Container, Row, Col, Spinner, FormLabel } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function Registerpage() {
     const [formData, setFormData] = useState({
@@ -15,29 +16,38 @@ function Registerpage() {
         confirm_password: '',
         sex: '',
         phone_number: '',
-        // image: null,
+        role: '',
+        admin_code: '', // Only needed if registering as an admin
     });
-    
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate()
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            image: file,
-        }));
-    };
+    const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
+    const validate = () => {
+        const errors = {};
+        if (formData.password !== formData.confirm_password) {
+            errors.password = "Passwords do not match.";
+        }
+        if (formData.role === 'admin' && formData.admin_code !== 'CARDO_45') {
+            errors.admin_code = "Invalid admin code. try as customer";
+        }
+        if (!formData.role) {
+            errors.role = "Role is required.";
+        }
+        return errors;
+    };
+
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
-        if (formData.password === formData.confirm_password) {
+        const validationErrors = validate();
+        if (Object.keys(validationErrors).length === 0) {
             setLoading(true);
             const formDataToSend = new FormData();
             Object.keys(formData).forEach(key => {
@@ -46,11 +56,11 @@ function Registerpage() {
 
             try {
                 await axios.post('https://earn-app.onrender.com/api/register', formDataToSend, {
-                    headers: {
-                        "Content-Type": 'multipart/form-data'
-                    }
+                    headers: { "Content-Type": 'multipart/form-data' }
                 });
-                alert('User created successfully');
+                const { username, role } = response.data;
+                setMessage(`User ${username} registered as ${role} successfully.`);
+                
                 setFormData({
                     first_name: '',
                     last_name: '',
@@ -60,29 +70,30 @@ function Registerpage() {
                     confirm_password: '',
                     sex: '',
                     phone_number: '',
-                    // image: null,
+                    role: '',
+                    admin_code: '' // Reset the admin code
                 });
-                navigate('/Login')
+                navigate('/Login');
             } catch (error) {
-                alert('Error during registration');
+                const errorData = error.response.data;
+                setErrors(errorData); // Display backend errors
                 console.error('Error:', error.message);
-                console.error('Response data:', error.response.data);
+                console.error('Response data:', errorData);
                 console.error('Response status:', error.response.status);
             } finally {
                 setLoading(false);
             }
         } else {
-            alert('Passwords do not match. Please try again.');
+            setErrors(validationErrors);
         }
-    }
+    };
 
     return (
         <Container className="my-5">
-            <Row className="justify-content-center"> 
+            <Row className="justify-content-center">
                 <Col xs={12} md={8} lg={6}>
                     <Card className="shadow-sm">
                         <Card.Header className="text-center bg-warning text-white">
-                            {/* <Image src={simumba} width="100%" height="250px" className="mb-3" /> */}
                             PayMe.io
                         </Card.Header>
                         <Card.Body className="p-4">
@@ -158,7 +169,6 @@ function Registerpage() {
                                         </Form.Group>
                                     </Col>
                                 </Row>
-                                    
                                 <Form.Group controlId="PhoneNumber">
                                     <Form.Label>Phone Number:</Form.Label>
                                     <FormControl 
@@ -169,29 +179,48 @@ function Registerpage() {
                                     />
                                 </Form.Group>
                                 <FormGroup controlId="Sex">
-                <FormLabel>Sex:</FormLabel>
-                <Form.Control
-                    as="select"
-                    name="sex"
-                    value={formData.sex}
-                    onChange={handleChange}
-                >
-                    <option value="">Select Sex</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </Form.Control>
-            </FormGroup>
-                                {/*
-                                <Form.Group controlId="Image">
-                                    <Form.Label>Image:</Form.Label>
-                                    <FormControl 
-                                        type="file"
-                                        name="image"
-                                        onChange={handleImageChange}
-                                    />
-                                </Form.Group> */}
+                                    <FormLabel>Sex:</FormLabel>
+                                    <Form.Control
+                                        as="select"
+                                        name="sex"
+                                        value={formData.sex}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="">Select Sex</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </Form.Control>
+                                </FormGroup>
+                                <Form.Group controlId="Role">
+                                    <Form.Label>Role:</Form.Label>
+                                    <Form.Control
+                                        as="select"
+                                        name="role"
+                                        value={formData.role}
+                                        onChange={handleChange}
+                                        required
+                                    >
+                                        <option value="">Select Role</option>
+                                        <option value="customer">Customer</option>
+                                        <option value="admin">Admin</option>
+                                    </Form.Control>
+                                    {errors.role && <p className="text-danger">{errors.role}</p>}
+                                </Form.Group>
+                                {formData.role === 'admin' && (
+                                    <Form.Group controlId="AdminCode">
+                                        <Form.Label>Admin Code:</Form.Label>
+                                        <FormControl 
+                                            type="text"
+                                            name="admin_code"
+                                            placeholder="Admin Code"
+                                            value={formData.admin_code}
+                                            onChange={handleChange}
+                                        />
+                                        {errors.admin_code && <p className="text-danger">{errors.admin_code}</p>}
+                                    </Form.Group>
+                                )}
                                 <Button variant="primary" type="submit" className="mt-3 w-100" disabled={loading}>
-                                    {loading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Register'}
+                                    {loading ? 'Registering ...' : 'Register'}
                                 </Button>
                             </Form>
                         </Card.Body>

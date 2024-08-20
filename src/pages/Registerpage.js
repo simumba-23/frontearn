@@ -15,7 +15,7 @@ function Registerpage() {
         confirm_password: '',
         sex: '',
         phone_number: '',
-        role: '',
+        role: 'customer',
         admin_code: '', // Only needed if registering as an admin
     });
 
@@ -201,7 +201,6 @@ function Registerpage() {
                                             onChange={handleChange}
                                             required
                                         >
-                                            <option value="">Select Role</option>
                                             <option value="customer">Customer</option>
                                             <option value="admin">Admin</option>
                                         </Form.Control>

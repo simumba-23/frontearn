@@ -73,7 +73,7 @@ const App = () =>{
         <Route path="/create" element={<CreateBlog />} />
         <Route path="/blog-category" element={<BlogCategories />} />
         <Route path="/aboutus" element={<AboutUs />} />
-        <Route path="/privacy&policy" element={<PrivacyPolicy />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path='/spotifyplayer' element={<SpotifyPlayer />} />
 
 

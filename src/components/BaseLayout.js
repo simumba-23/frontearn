@@ -1,6 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Container, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { FaHome, FaVideo,FaGift, FaMusic,FaUserFriends, FaTasks, FaLockOpen, FaMoneyBillWave, FaCog, FaQuestionCircle, FaPhone, FaCommentsDollar, FaSignOutAlt } from 'react-icons/fa';
+import { FcSurvey } from "react-icons/fc";
+import { CgProfile } from "react-icons/cg";
+import { MdPayment } from "react-icons/md";
+import { WiMoonAltWaningCrescent3 } from "react-icons/wi";
 import AuthContext from '../context/AuthContext';
 import '../App.css';
 
@@ -8,6 +13,7 @@ const BaseLayout = ({ children, title }) => {
   const { user, logoutUser } = useContext(AuthContext);
 
   const [darkMode, setDarkMode] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar toggle
 
   useEffect(() => {
     const storedMode = localStorage.getItem('darkMode');
@@ -28,29 +34,34 @@ const BaseLayout = ({ children, title }) => {
     }
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen); // Toggle sidebar state
+  };
+
   return (
     <>
       {user && (
         <>
           <header className="navbar navbar-dark sticky-top dash-header flex-md-nowrap p-2 shadow">
-            <Link className="navbar-brand col-md-3 col-lg-2 me-0 px-3" to="">
-              Pay<span>Me</span>.io
-            </Link>
-            <button
-              className="navbar-toggler position-absolute d-md-none collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#sidebarMenu"
-              aria-controls="sidebarMenu"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="navbar-nav">
+            <div className="d-flex align-items-center">
+              <button
+                className="navbar-toggler d-md-none"
+                type="button"
+                onClick={toggleSidebar} // Attach the toggle function
+                aria-controls="sidebarMenu"
+                aria-expanded={isSidebarOpen} // Update aria-expanded based on state
+                aria-label="Toggle navigation"
+              >
+                <span className="navbar-toggler-icon"></span>
+              </button>
+              <Link className="navbar-brand col-md-3 col-lg-2 me-0 px-3" to="">
+                Pay<span>Me</span>.io
+              </Link>
+            </div>
+            <div className="navbar-nav flex-row flex-grow-1 justify-content-end">
               <div className="nav-item text-nowrap">
                 <Link className="nav-link px-3" onClick={logoutUser}>
-                  Sign out
+                  <FaSignOutAlt className="me-2" /> Sign out
                 </Link>
               </div>
             </div>
@@ -58,31 +69,145 @@ const BaseLayout = ({ children, title }) => {
 
           <Container fluid>
             <div className="row">
-              <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+              <nav
+                id="sidebarMenu"
+                className={`col-md-3 col-lg-2 d-md-block bg-light sidebar collapse ${isSidebarOpen ? 'show' : ''}`} // Conditionally apply 'show' class
+              >
                 <div className="position-sticky pt-3">
                   <Nav className="flex-column">
-                    <Nav.Link as={NavLink} to="/Customer" activeClassName="active">
-                      Dashboard
-                    </Nav.Link>
-                    <Nav.Link as={NavLink} to="/TransactionSummary" activeClassName="active">
-                      Transactions
-                    </Nav.Link>
-                    <Nav.Link as={NavLink} to="/withdraw/form" activeClassName="active">
-                      Cash Withdraw
-                    </Nav.Link>
-                    <NavDropdown title="Tasks" id="tasks-dropdown">
-                      <NavDropdown.Item as={NavLink} to="/tasks" activeClassName="active">All Tasks</NavDropdown.Item>
-                      <NavDropdown.Item as={NavLink} to="/tasks/video" activeClassName="active">Video Tasks</NavDropdown.Item>
-                      <NavDropdown.Item as={NavLink} to="/tasks/Music" activeClassName="active">Music Tasks</NavDropdown.Item>
-                      <NavDropdown.Item as={NavLink} to="/tasks/Ad" activeClassName="active">Ad Tasks</NavDropdown.Item>
-                      <NavDropdown.Item as={NavLink} to="/tasks/article" activeClassName="active">Article Tasks</NavDropdown.Item>
-                    </NavDropdown>
-                    <NavDropdown title="Settings" id="Settings-dropdown">
-                      <NavDropdown.Item as={NavLink} to="/tasks" activeClassName="active">Change Language</NavDropdown.Item>
-                      <NavDropdown.Item as={NavLink} to="#" onClick={toggleMode}>
-                        Change Mode
-                      </NavDropdown.Item>
-                    </NavDropdown>
+                    <OverlayTrigger
+                      placement="right"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={<Tooltip id="home-tooltip">Go to Dashboard</Tooltip>}
+                    >
+                      <Nav.Link as={NavLink} to="/Customer" activeClassName="active">
+                        <FaHome className="me-2" /> Home
+                      </Nav.Link>
+                    </OverlayTrigger>
+
+                    <OverlayTrigger
+                      placement="right"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={<Tooltip id="Tasks-tooltip">View and Start Tasks</Tooltip>}
+                    >
+                      <NavDropdown
+                        title={
+                          <>
+                            <FaTasks className="me-2" /> Tasks
+                          </>
+                        }
+                        id="tasks-dropdown"
+                      >
+                        <NavDropdown.Item
+                          as={NavLink}
+                          to="/tasks/video"
+                          activeClassName="active"
+                        >
+                          <FaVideo className="me-2" /> Videos
+                        </NavDropdown.Item>
+                        <NavDropdown.Item
+                          as={NavLink}
+                          to="/tasks/music"
+                          activeClassName="active"
+                        >
+                          <FaMusic className="me-2" /> Music
+                        </NavDropdown.Item>
+                        <NavDropdown.Item
+                          as={NavLink}
+                          to="/tasks/survey"
+                          activeClassName="active"
+                        >
+                          <FcSurvey className="me-2" /> Surveys
+                        </NavDropdown.Item>
+                      </NavDropdown>
+                    </OverlayTrigger>
+
+                    <OverlayTrigger
+                      placement="right"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={<Tooltip id="Rewards-tooltip">Check Your Rewards</Tooltip>}
+                    >
+                      <Nav.Link as={NavLink} to="/TransactionSummary" activeClassName="active">
+                        <FaGift className="me-2" /> Rewards
+                      </Nav.Link>
+                    </OverlayTrigger>
+                    
+                    <OverlayTrigger
+                      placement="right"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={<Tooltip id="Refferal-tooltip">Refer Friends and Earn More</Tooltip>}
+                    >
+                      <NavDropdown title={<><FaCog className="me-2" /> Refferals </>} id="Settings-dropdown">
+                      
+                        <NavDropdown.Item as={NavLink} to="#">
+                        <FaUserFriends className='me-2' />Invites Friends
+                        </NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to="#">
+                        <FaGift className='me-2' />Refferal Earnings
+                        </NavDropdown.Item>
+                      </NavDropdown>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                      placement="right"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={<Tooltip id="Rewards-tooltip">Manage Your Account</Tooltip>}
+                    >
+                      <NavDropdown title={<><FaCog className="me-2" /> Accounts</>} id="Settings-dropdown">
+                        <NavDropdown.Item as={NavLink} to="#" activeClassName="active">
+                        <CgProfile /> Profile
+                        </NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to="#">
+                          <FaCog className="me-2" /> Security
+                        </NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to="#">
+                        <MdPayment className='me-2' /> Payments
+                        </NavDropdown.Item>
+                      </NavDropdown>
+                    </OverlayTrigger>
+
+
+                    <OverlayTrigger
+                      placement="right"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={<Tooltip id="supports-tooltip">Get Help and Support</Tooltip>}
+                    >
+                      <NavDropdown title={<><FaQuestionCircle className="me-2" /> Supports</>} id="Settings-dropdown">
+                        <NavDropdown.Item as={NavLink} to="#" activeClassName="active">
+                          <FaQuestionCircle className="me-2" /> FAQS
+                        </NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to="#">
+                          <FaPhone className="me-2" /> Contact Us
+                        </NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to="#">
+                          <FaCommentsDollar className="me-2" /> Live Chat
+                        </NavDropdown.Item>
+                      </NavDropdown>
+                    </OverlayTrigger>
+
+                    <OverlayTrigger
+                      placement="right"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={<Tooltip id="logout-tooltip">Logout</Tooltip>}
+                    >
+                      <Nav.Link as={NavLink} to="/logout" activeClassName="active">
+                        <FaLockOpen className='me-2' /> Logout
+                      </Nav.Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={<Tooltip id="Dark-tooltip">Dark/Light Mode</Tooltip>}
+
+                    >
+                      <>
+                      <Nav.Link onClick={toggleMode}>
+                      <WiMoonAltWaningCrescent3 className='me-2'   />
+                            Dark/Light 
+                      </Nav.Link>
+
+                      </>
+                    
+                    </OverlayTrigger>
                   </Nav>
                 </div>
               </nav>

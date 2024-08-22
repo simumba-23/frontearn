@@ -6,6 +6,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Registerpage() {
+    const API_URL = process.env.REACT_APP_API_URL;
+
     const [formData, setFormData] = useState({
         first_name: '',
         last_name: '',
@@ -47,7 +49,7 @@ function Registerpage() {
             });
 
             try {
-                const response = await axios.post('https://earn-app.onrender.com/api/register', formDataToSend, {
+                const response = await axios.post(`${API_URL}/register`, formDataToSend, {
                     headers: { "Content-Type": 'multipart/form-data' }
                 });
                 const { username } = response.data;

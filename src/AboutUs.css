@@ -1,0 +1,35 @@
+.about-us {
+    background-color: #f8f9fa;
+  }
+  
+  .card {
+    border: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .list-group-item {
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .list-group-item:hover {
+    background-color: #343a40;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .bg-primary {
+    background-color: #007bff !important;
+  }
+  
+  .bg-dark {
+    background-color: #343a40 !important;
+  }
+  
+  .text-decoration-none {
+    text-decoration: none;
+  }
+  

@@ -11,10 +11,11 @@ export const AuthProvider = ({ children }) => {
     const [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const API_URL = process.env.REACT_APP_API_URL;
 
     const loginUser = async (e) => {
         e.preventDefault();
-        const response = await fetch('https://earn-app.onrender.com/api/token/', {
+        const response = await fetch(`${API_URL}/token/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -68,7 +69,7 @@ export const AuthProvider = ({ children }) => {
         const interval = setInterval(() => {
             if (authTokens) {
                 const updateToken = async () => {
-                    const response = await fetch('https://earn-app.onrender.com/api/token/refresh/', {
+                    const response = await fetch(`${API_URL}/api/token/refresh/`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { useContext } from 'react';
 import AuthContext from './context/AuthContext';
-const API_URL = 'https://earn-app.onrender.com/api'; // Change this to your backend URL
+const API_URL = process.env.REACT_APP_API_URL; // Change this to your backend URL
 
 const useAxios = () => {
     const { authTokens, logoutUser } = useContext(AuthContext);

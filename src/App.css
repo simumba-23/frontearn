@@ -297,3 +297,48 @@ body.dark-mode {
   border-width: 15px 0 15px 25px;
   border-color: transparent transparent transparent #fff;
 }
+
+/* header section of landing home page */
+.hero {
+  /* background: url('https://via.placeholder.com/1920x600') no-repeat center center; */
+  background-size: cover;
+  color: #fff;
+  padding: 100px 0;
+}
+
+.hero-highlight {
+  color: #ffd700; /* Change this to your desired highlight color */
+  font-weight: bold;
+}
+
+.display-4 {
+  font-size: 3.5rem;
+  font-weight: 700;
+}
+
+.lead {
+  font-size: 1.25rem;
+}
+
+/* footer styling */
+
+.footer {
+  background-color: #343a40;
+}
+
+.social-icons a {
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #adb5bd;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
+.text-decoration-none:hover {
+  text-decoration: underline;
+}
+

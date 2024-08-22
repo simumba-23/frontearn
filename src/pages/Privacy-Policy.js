@@ -8,10 +8,7 @@ const PrivacyPolicy = () => {
             <h1 className="text-center mb-4">Privacy Policy</h1>
             <Card className="p-4">
               <Card.Body>
-                <Card.Text>
-                  <strong>Effective Date: 10/08/2024</strong>
-                </Card.Text>
-                
+
                 <h2>1. Introduction</h2>
                 <Card.Text>
                   Welcome to PayMe.io (“we,” “our,” or “us”). We are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website [Your Website URL] (the “Site”). Please read this Privacy Policy carefully. If you do not agree with the terms of this Privacy Policy, please do not access the Site.

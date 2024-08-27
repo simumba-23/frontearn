@@ -17,6 +17,7 @@ import VideoTask from './pages/VideoTask';
 import MusicTask from './pages/MusicTask';
 import TaskList from './pages/TaskList';
 import { ManageMusicTask } from './pages/ManageMusicTask';
+import { Faqs } from './components/Faqs';
 import AdminTaskList from './pages/AdminTaskList';
 import { ManageVideoTask } from './pages/ManageVideoTask';
 import { ManagePodcastTask } from './pages/ManagePodcastTask';
@@ -36,11 +37,13 @@ import { BlogCategories } from './components/BlogCategories';
 import AboutUs from './pages/AboutUs';
 import PrivacyPolicy from './pages/Privacy-Policy';
 import SpotifyPlayer from './components/SpotifyPlayer';
-
+import ProfileInfo  from './accounts/ProfileInfo';
+import { Settings } from './accounts/Settings';
+import { SupportFaqs } from './supports/Faqs';
 const App = () =>{ 
   return(
   
-      <Routes>
+    <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/Login" element={<Loginpage />} />
         <Route path="/Register" element={<Registerpage />} />
@@ -75,6 +78,10 @@ const App = () =>{
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path='/spotifyplayer' element={<SpotifyPlayer />} />
+        <Route path='/faqs' element={< Faqs/>} />
+        <Route path='/profile' element ={ <ProfileInfo />} />
+        <Route path='/settings' element ={ <Settings />} />
+        <Route path= '/support/faqs' element={ <SupportFaqs />}  />
 
 
 

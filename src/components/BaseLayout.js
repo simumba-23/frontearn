@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Navbar, Nav, NavDropdown, Container, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import { FaHome, FaVideo,FaGift, FaMusic,FaUserFriends, FaTasks, FaLockOpen, FaMoneyBillWave, FaCog, FaQuestionCircle, FaPhone, FaCommentsDollar, FaSignOutAlt } from 'react-icons/fa';
+import { FaHome,FaLink, FaVideo,FaGift, FaMusic,FaUserFriends, FaTasks, FaLockOpen, FaMoneyBillWave, FaCog, FaQuestionCircle, FaPhone, FaCommentsDollar, FaSignOutAlt } from 'react-icons/fa';
 import { FcSurvey } from "react-icons/fc";
 import { CgProfile } from "react-icons/cg";
 import { MdPayment } from "react-icons/md";
@@ -137,7 +137,7 @@ const BaseLayout = ({ children, title }) => {
                       delay={{ show: 250, hide: 400 }}
                       overlay={<Tooltip id="Refferal-tooltip">Refer Friends and Earn More</Tooltip>}
                     >
-                      <NavDropdown title={<><FaCog className="me-2" /> Refferals </>} id="Settings-dropdown">
+                      <NavDropdown title={<><FaLink className="me-2" /> Refferals </>} id="Settings-dropdown">
                       
                         <NavDropdown.Item as={NavLink} to="#">
                         <FaUserFriends className='me-2' />Invites Friends
@@ -153,10 +153,10 @@ const BaseLayout = ({ children, title }) => {
                       overlay={<Tooltip id="Rewards-tooltip">Manage Your Account</Tooltip>}
                     >
                       <NavDropdown title={<><FaCog className="me-2" /> Accounts</>} id="Settings-dropdown">
-                        <NavDropdown.Item as={NavLink} to="#" activeClassName="active">
+                        <NavDropdown.Item as={NavLink} to="/profile" activeClassName="active">
                         <CgProfile /> Profile
                         </NavDropdown.Item>
-                        <NavDropdown.Item as={NavLink} to="#">
+                        <NavDropdown.Item as={NavLink} to="/settings">
                           <FaCog className="me-2" /> Security
                         </NavDropdown.Item>
                         <NavDropdown.Item as={NavLink} to="#">
@@ -172,7 +172,7 @@ const BaseLayout = ({ children, title }) => {
                       overlay={<Tooltip id="supports-tooltip">Get Help and Support</Tooltip>}
                     >
                       <NavDropdown title={<><FaQuestionCircle className="me-2" /> Supports</>} id="Settings-dropdown">
-                        <NavDropdown.Item as={NavLink} to="#" activeClassName="active">
+                        <NavDropdown.Item as={NavLink} to="/support/faqs" activeClassName="active">
                           <FaQuestionCircle className="me-2" /> FAQS
                         </NavDropdown.Item>
                         <NavDropdown.Item as={NavLink} to="#">

@@ -1,9 +1,10 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import '../AboutUs.css'; // Assuming you have a CSS file for additional custom styles
-
+import Footer from '../components/Footer';
 const AboutUs = () => {
   return (
+    <>
     <section className="about-us py-5">
       <Container>
         <Row className="mb-4">
@@ -83,6 +84,8 @@ const AboutUs = () => {
 
       </Container>
     </section>
+      <Footer />
+</>
   );
 };
 

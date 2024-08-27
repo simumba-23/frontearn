@@ -1,0 +1,33 @@
+.faq-section h2 {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .faq-section .accordion-button {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .faq-section .accordion-button:hover {
+    background-color: #f0f0f0;
+    color: #007bff;
+  }
+  
+  .faq-section .accordion-body {
+    background-color: #fafafa;
+    padding: 20px;
+  }
+  
+  .faq-section .accordion-button:not(.collapsed) {
+    color: #007bff;
+  }
+  
+  @media (max-width: 768px) {
+    .faq-section h2 {
+      font-size: 1.5rem;
+    }
+  
+    .faq-section .accordion-body {
+      padding: 15px;
+    }
+  }
+  

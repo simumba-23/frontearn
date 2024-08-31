@@ -40,6 +40,10 @@ import SpotifyPlayer from './components/SpotifyPlayer';
 import ProfileInfo  from './accounts/ProfileInfo';
 import { Settings } from './accounts/Settings';
 import { SupportFaqs } from './supports/Faqs';
+import { ContactForm } from './supports/ContactForm';
+import ReferralLink from './refferals/refferals';
+import InviteesList from './refferals/InviteeList';
+import ReferralEarnings from './refferals/ReferralEarnings';
 const App = () =>{ 
   return(
   
@@ -82,6 +86,11 @@ const App = () =>{
         <Route path='/profile' element ={ <ProfileInfo />} />
         <Route path='/settings' element ={ <Settings />} />
         <Route path= '/support/faqs' element={ <SupportFaqs />}  />
+        <Route path='support/contactform' element={ <ContactForm /> } />
+        <Route path='/referrals' element ={ <ReferralLink />} />
+        <Route path="/invitees" element={ < InviteesList />} />
+        <Route path='/ReferralEarnings' element = { <ReferralEarnings />} />
+
 
 
 

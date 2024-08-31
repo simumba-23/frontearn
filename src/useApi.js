@@ -27,6 +27,13 @@ const useApi = () => {
   const approve = (id) => axiosInstance.post(`/withdrawal-requests/${id}/approve`);
   const reject = (id) => axiosInstance.post(`/withdrawal-requests/${id}/reject`);
   const createBlog = (blogData) => axiosInstance.post('/create_blog',blogData);
+  const getReferralLinks = () => axiosInstance.get('/referral-link');
+  const getInvitees = () => axiosInstance.get('/invitee-lists');
+  const getReferralEarnings = () => axiosInstance.get('/referral-earnings');
+  const createContactDetails = (formData) => axiosInstance.post('/contact_form_submission',formData);
+  const changePassword = (passData) => axiosInstance.post('/change-password',passData);
+  const generate2fa = () => axiosInstance.get('/generate_2fa_qr_code');
+  const verify2fa = (otpCode) => axiosInstance.post('/verify_2fa',otpCode);
   return {
     fetchTasks,
     getWithdrawalRequestList,
@@ -44,7 +51,15 @@ const useApi = () => {
     fetch_admin_reports,
     approve,
     reject,
-    createBlog
+    createBlog,
+    getReferralLinks,
+    getInvitees,
+    getReferralEarnings,
+    createContactDetails,
+    changePassword,
+    generate2fa,
+    verify2fa,
+
   };
 };
 

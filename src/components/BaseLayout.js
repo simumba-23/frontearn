@@ -139,10 +139,10 @@ const BaseLayout = ({ children, title }) => {
                     >
                       <NavDropdown title={<><FaLink className="me-2" /> Refferals </>} id="Settings-dropdown">
                       
-                        <NavDropdown.Item as={NavLink} to="#">
+                        <NavDropdown.Item as={NavLink} to="/referrals">
                         <FaUserFriends className='me-2' />Invites Friends
                         </NavDropdown.Item>
-                        <NavDropdown.Item as={NavLink} to="#">
+                        <NavDropdown.Item as={NavLink} to="/ReferralEarnings">
                         <FaGift className='me-2' />Refferal Earnings
                         </NavDropdown.Item>
                       </NavDropdown>
@@ -175,7 +175,7 @@ const BaseLayout = ({ children, title }) => {
                         <NavDropdown.Item as={NavLink} to="/support/faqs" activeClassName="active">
                           <FaQuestionCircle className="me-2" /> FAQS
                         </NavDropdown.Item>
-                        <NavDropdown.Item as={NavLink} to="#">
+                        <NavDropdown.Item as={NavLink} to="/support/contactform">
                           <FaPhone className="me-2" /> Contact Us
                         </NavDropdown.Item>
                         <NavDropdown.Item as={NavLink} to="#">

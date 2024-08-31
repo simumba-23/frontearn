@@ -54,7 +54,7 @@ const Footer = () => {
               </ListGroup.Item>
             </ListGroup>
             <ListGroup.Item className="bg-dark p-0">
-                <Link to="/feedback" className="text-white text-decoration-none">Contact Us</Link>
+                <Link to="/support/contactform" className="text-white text-decoration-none">Contact Us</Link>
               </ListGroup.Item>
           </Col>
         </Row>

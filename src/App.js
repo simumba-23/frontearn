@@ -44,6 +44,7 @@ import { ContactForm } from './supports/ContactForm';
 import ReferralLink from './refferals/refferals';
 import InviteesList from './refferals/InviteeList';
 import ReferralEarnings from './refferals/ReferralEarnings';
+import { ContactFormPage } from './components/ContactUs';
 const App = () =>{ 
   return(
   
@@ -90,13 +91,8 @@ const App = () =>{
         <Route path='/referrals' element ={ <ReferralLink />} />
         <Route path="/invitees" element={ < InviteesList />} />
         <Route path='/ReferralEarnings' element = { <ReferralEarnings />} />
-
-
-
-
-
-
-
+        <Route path='/contactus' element = { <ContactFormPage />} />
+        
         <Route 
                     path="/blogs/:id" 
                     element={

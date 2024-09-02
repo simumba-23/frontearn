@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
 import { Button, Card, Container, Form } from 'react-bootstrap';
-import axios from 'axios';
-import BaseLayout from '../components/BaseLayout';
-import { ContactPage } from './Contactpage';
 import useApi from '../useApi';
+import { ContactPage } from '../supports/Contactpage';
 import ReCAPTCHA from 'react-google-recaptcha';
 
-export const ContactForm = () => {
+export const ContactFormPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone_number: '',
     subject: 'Feedback',  // Default subject
     message: '',
-    captcha: '',
+    captcha:'',
   });
   const { createContactDetails } = useApi();
 
   const [submitted, setSubmitted] = useState(false);
   const [captchaValid, setCaptchaValid] = useState(false); 
+
 
   const handleChange = (e) => {
     setFormData({
@@ -26,18 +25,18 @@ export const ContactForm = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-
   const handleCaptchaChange = (value) => {
     setFormData({ ...formData, captcha: value });
     setCaptchaValid(true);
   };
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!captchaValid) {
-      alert('Please complete the CAPTCHA');
-      return;
-    }
+        alert('Please complete the CAPTCHA');
+        return;
+      }
       createContactDetails(formData).then(response => {
         setSubmitted(true);
         alert(response.data.message);
@@ -48,7 +47,7 @@ export const ContactForm = () => {
   };
 
   return (
-    <BaseLayout title='Contact us'>
+    < >
       <div>
         <Container className="mt-5">
           <Card>
@@ -117,11 +116,12 @@ export const ContactForm = () => {
                     required
                   />
                 </Form.Group>
-                <ReCAPTCHA
+
+                 <ReCAPTCHA
                   sitekey="6LduPDQqAAAAADbfOd2iy5D2USQLGt37rnK1uANg"
                   onChange={handleCaptchaChange}
                 />
-                
+
                 <Button variant="primary" type="submit">Submit</Button>
               </Form>
             </Card.Body>
@@ -129,6 +129,6 @@ export const ContactForm = () => {
         </Container>
       </div>
       <ContactPage />
-    </BaseLayout>
+    </>
   );
 };

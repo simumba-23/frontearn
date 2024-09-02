@@ -6,7 +6,7 @@ import password from '../Assets/password.png';
 import loginlogo from '../Assets/loginlogo.png';
 import simumba from '../Assets/toolsharingsimumba.png';
 import AuthContext from '../context/AuthContext';
-
+import CookieConsent from '../components/CookieConsent';
 function LoginPage() {
     const { loginUser } = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
@@ -84,11 +84,15 @@ function LoginPage() {
                                 >
                                     {loading ? 'Logging in...' : 'Login'}
                                 </Button>
+                                <CookieConsent />
+                            
                             </Form>
                         </Card.Body>
+        
                     </Card>
                 </Col>
             </Row>
+
         </Container>
     );
 }

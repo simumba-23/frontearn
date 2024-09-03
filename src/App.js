@@ -27,7 +27,7 @@ import AddAnswerOption from './pages/AddAnswerOption';
 import SurveyDetail from './pages/SurveyDetail';
 import SurveyList from './pages/SurveyList';
 import QuestionList from './pages/AddAnswerOption';
-import { WithdrawRequest } from './pages/WithdrawRequest';
+import { WithdrawRequest } from './accounts/WithdrawRequest';
 import BlogList from './components/BlogList';
 import BlogDetail from './components/BlogDetail';
 import CommentForm from './components/CommentForm';
@@ -45,6 +45,10 @@ import ReferralLink from './refferals/refferals';
 import InviteesList from './refferals/InviteeList';
 import ReferralEarnings from './refferals/ReferralEarnings';
 import { ContactFormPage } from './components/ContactUs';
+import PaymentInfo from './accounts/PaymentsInfo';
+import Leaderboard from './accounts/Leaderboard';
+import { PayList } from './accounts/PayList';
+import { WaitList } from './accounts/WaitList';
 const App = () =>{ 
   return(
   
@@ -92,7 +96,10 @@ const App = () =>{
         <Route path="/invitees" element={ < InviteesList />} />
         <Route path='/ReferralEarnings' element = { <ReferralEarnings />} />
         <Route path='/contactus' element = { <ContactFormPage />} />
-        
+        <Route path ='/payments' element = { <PaymentInfo />} />
+        <Route path='/leaderboard' element = { <Leaderboard />} />
+        <Route path='/payoutlist' element ={ <PayList />} />
+        <Route path='/waitlist' element = { <WaitList />} />
         <Route 
                     path="/blogs/:id" 
                     element={

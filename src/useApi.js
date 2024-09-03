@@ -34,6 +34,9 @@ const useApi = () => {
   const changePassword = (passData) => axiosInstance.post('/change-password',passData);
   const generate2fa = () => axiosInstance.get('/generate_2fa_qr_code');
   const verify2fa = (otpCode) => axiosInstance.post('/verify_2fa',otpCode);
+  const getProfileData = () => axiosInstance.get('/profile-details');
+  const updateProfileData = (formState) => axiosInstance.put('/profile-details',formState)
+  const getLeaderboard = () => axiosInstance.get('/leaderboard')
   return {
     fetchTasks,
     getWithdrawalRequestList,
@@ -59,6 +62,9 @@ const useApi = () => {
     changePassword,
     generate2fa,
     verify2fa,
+    getProfileData,
+    updateProfileData,
+    getLeaderboard,
 
   };
 };

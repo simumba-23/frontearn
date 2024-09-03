@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, Row, Col, Container, FormGroup, FormLabel, FormControl, Button, Form, Alert, Spinner } from 'react-bootstrap';
 import BaseLayout from '../components/BaseLayout';
 import useApi from '../useApi';
+import { IoInformationCircleOutline } from "react-icons/io5";
 
 export const WithdrawRequest = () => {
     const [amount, setAmount] = useState('');
@@ -29,9 +30,15 @@ export const WithdrawRequest = () => {
         <BaseLayout title='Withdraw Request'>
             <Container className='my-4'>
                 <Row className='justify-content-center'>
-                    <Col md={6} lg={4}>
-                        <Card className='p-4'>
+                    <Col  lg={4}>
+                        <Card className='p-4 border'>
+
                             <Card.Body>
+                            <Card.Title className='fw-normal fs-6 fst-italic'> 
+                                <IoInformationCircleOutline /> The minimum withdrawble amount $ 5 and more   </Card.Title> 
+                                <Card.Title className='fw-normal fs-6 fst-italic'> 
+                                <IoInformationCircleOutline /> The 2nd  withdraw is unlimited but it require to invite 15 friends  </Card.Title> 
+ 
                                 <Form onSubmit={handleSubmit}>
                                     <FormGroup controlId='withdrawalRequest'>
                                     {message && (
@@ -55,6 +62,7 @@ export const WithdrawRequest = () => {
                                             className='mt-3'
                                             type='submit'
                                             disabled={loading}
+                                            style={{background: '#2c70c9' }}
                                         >
                                             {loading ? <Spinner animation='border' size='sm' /> : 'Request'}
                                         </Button>
@@ -63,6 +71,8 @@ export const WithdrawRequest = () => {
                                 </Form>
                             </Card.Body>
                         </Card>
+                        <div>
+                        </div>
                     </Col>
                 </Row>
             </Container>

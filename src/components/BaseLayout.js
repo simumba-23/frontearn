@@ -159,7 +159,7 @@ const BaseLayout = ({ children, title }) => {
                         <NavDropdown.Item as={NavLink} to="/settings">
                           <FaCog className="me-2" /> Security
                         </NavDropdown.Item>
-                        <NavDropdown.Item as={NavLink} to="#">
+                        <NavDropdown.Item as={NavLink} to="/payments">
                         <MdPayment className='me-2' /> Payments
                         </NavDropdown.Item>
                       </NavDropdown>
@@ -177,9 +177,6 @@ const BaseLayout = ({ children, title }) => {
                         </NavDropdown.Item>
                         <NavDropdown.Item as={NavLink} to="/support/contactform">
                           <FaPhone className="me-2" /> Contact Us
-                        </NavDropdown.Item>
-                        <NavDropdown.Item as={NavLink} to="#">
-                          <FaCommentsDollar className="me-2" /> Live Chat
                         </NavDropdown.Item>
                       </NavDropdown>
                     </OverlayTrigger>

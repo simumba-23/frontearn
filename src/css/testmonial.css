@@ -1,0 +1,19 @@
+.testimonial-page {
+    padding: 20px;
+}
+
+.featured-testimonials .carousel-item {
+    display: flex;
+    justify-content: center;
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.submit-testimonial {
+    margin-top: 20px;
+    /* text-align: center; */
+}

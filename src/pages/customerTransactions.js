@@ -31,15 +31,7 @@ const TransactionSummary = () => {
       <Col md={3}>
         <Card className="mb-4 bg-info text-light">
           <Card.Body>
-            <Card.Title>Approved Amount</Card.Title>
-            <Card.Text>$ {stats.approved_total}</Card.Text>
-          </Card.Body>
-        </Card>
-      </Col>
-      <Col md={3}>
-        <Card className="mb-4 bg-info text-light">
-          <Card.Body>
-            <Card.Title>Pending Amount</Card.Title>
+        <Card.Title>Pending Amount</Card.Title>
             <Card.Text>$ {stats.pending_total}</Card.Text>
           </Card.Body>
         </Card>
@@ -63,7 +55,7 @@ const TransactionSummary = () => {
       <Col md={3}>
         <Card className="mb-4 bg-secondary text-light">
           <Card.Body>
-            <Card.Title>Wallet Balance</Card.Title>
+            <Card.Title>Equivalent Balance</Card.Title>
             <Card.Text>$ {stats.wallet_balance}</Card.Text>
           </Card.Body>
         </Card>

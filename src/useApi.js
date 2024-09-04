@@ -35,8 +35,10 @@ const useApi = () => {
   const generate2fa = () => axiosInstance.get('/generate_2fa_qr_code');
   const verify2fa = (otpCode) => axiosInstance.post('/verify_2fa',otpCode);
   const getProfileData = () => axiosInstance.get('/profile-details');
-  const updateProfileData = (formState) => axiosInstance.put('/profile-details',formState)
-  const getLeaderboard = () => axiosInstance.get('/leaderboard')
+  const updateProfileData = (formState) => axiosInstance.put('/profile-details',formState);
+  const getLeaderboard = () => axiosInstance.get('/leaderboard');
+  const getUserHistory = () => axiosInstance.get('/user_history');
+
   return {
     fetchTasks,
     getWithdrawalRequestList,
@@ -65,6 +67,7 @@ const useApi = () => {
     getProfileData,
     updateProfileData,
     getLeaderboard,
+    getUserHistory,
 
   };
 };

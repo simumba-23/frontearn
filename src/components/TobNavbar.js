@@ -15,7 +15,7 @@ const TopNavbar = () => {
             <Nav.Link as={Link} to="/" end>
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/payment-proof">
+            <Nav.Link as={Link} to="/testmonial">
               Testimonial
             </Nav.Link>
             <Nav.Link as={Link} to="/aboutus">

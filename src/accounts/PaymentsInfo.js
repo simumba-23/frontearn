@@ -71,7 +71,7 @@ const PaymentInfo = () => {
       <Button as={Link} to="/leaderboard" style={{background:'#8fc9a4', borderRadius:8,margin:5}}> View Leaderboard</Button>
       <Button as={Link} to="/payoutlist" style={{background:'#82b3b5', borderRadius:8, margin:5 }}>PayList(Currently)</Button>
       <Button as={Link} to="/waitlist" style={{background:'#6797eb', borderRadius:8,margin:5}}>WaitList(Next)</Button>
-
+      
       </div>
       
       {/* <Leaderboard /> */}

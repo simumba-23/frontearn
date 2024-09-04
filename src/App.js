@@ -49,6 +49,8 @@ import PaymentInfo from './accounts/PaymentsInfo';
 import Leaderboard from './accounts/Leaderboard';
 import { PayList } from './accounts/PayList';
 import { WaitList } from './accounts/WaitList';
+import TestimonialPage from './testmonial/TestmonialPage';
+import UserHistory from './accounts/UserHistory';
 const App = () =>{ 
   return(
   
@@ -100,6 +102,8 @@ const App = () =>{
         <Route path='/leaderboard' element = { <Leaderboard />} />
         <Route path='/payoutlist' element ={ <PayList />} />
         <Route path='/waitlist' element = { <WaitList />} />
+        <Route path='/testmonial' element= { <TestimonialPage />} />
+        <Route path='/userhistory' element = {< UserHistory />} />
         <Route 
                     path="/blogs/:id" 
                     element={
@@ -109,7 +113,7 @@ const App = () =>{
                         </>
                     } 
                 />
-      </Routes>
+    </Routes>
 );}
 
 export default App;

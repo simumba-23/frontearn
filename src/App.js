@@ -1,11 +1,8 @@
 import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
-// import './App.css';
 import Homepage from './pages/Homepage';
 import Loginpage from './pages/Loginpage';
 import Registerpage from './pages/Registerpage';
-// import Dashboardpage from './pages/Dashboardpage';
 import Admindashboard from './pages/Admindashboard';
-import Customerdashboard from './pages/Customerdashboard';
 import PrivateRoute from './components/PrivateRoute';
 import CustomerList from './pages/CustomerList';
 import AddTask from './pages/AddTask';
@@ -51,6 +48,7 @@ import { PayList } from './accounts/PayList';
 import { WaitList } from './accounts/WaitList';
 import TestimonialPage from './testmonial/TestmonialPage';
 import UserHistory from './accounts/UserHistory';
+import Customerdashboard from './customer_dashboard/Customerdashboard';
 const App = () =>{ 
   return(
   

@@ -38,6 +38,9 @@ const useApi = () => {
   const updateProfileData = (formState) => axiosInstance.put('/profile-details',formState);
   const getLeaderboard = () => axiosInstance.get('/leaderboard');
   const getUserHistory = () => axiosInstance.get('/user_history');
+  const getReferralStatus = () => axiosInstance.get ('/referral-status');
+  const getRecentActivities = () => axiosInstance.get('/recent-activities');
+  const getTaskProgress = () => axiosInstance.get('/task-progress');
 
   return {
     fetchTasks,
@@ -68,6 +71,9 @@ const useApi = () => {
     updateProfileData,
     getLeaderboard,
     getUserHistory,
+    getRecentActivities,
+    getReferralStatus,
+    getTaskProgress,
 
   };
 };

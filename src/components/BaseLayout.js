@@ -222,15 +222,6 @@ const BaseLayout = ({ children, title }) => {
                     <OverlayTrigger
                       placement="right"
                       delay={{ show: 250, hide: 400 }}
-                      overlay={<Tooltip id="logout-tooltip">Logout</Tooltip>}
-                    >
-                      <Nav.Link as={NavLink} to="/logout" activeClassName="active">
-                        <FaLockOpen className='me-2' /> Logout
-                      </Nav.Link>
-                    </OverlayTrigger>
-                    <OverlayTrigger
-                      placement="right"
-                      delay={{ show: 250, hide: 400 }}
                       overlay={<Tooltip id="toggle-tooltip">Switch Mode</Tooltip>}
                     >
                       <Nav.Link onClick={toggleMode} className="nav-link">

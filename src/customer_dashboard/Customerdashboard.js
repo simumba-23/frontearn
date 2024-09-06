@@ -10,20 +10,20 @@ import useApi from '../useApi';
 const Customerdashboard = () => {
   const { user } = useContext(AuthContext);
   const { userTaskStats,getRecentActivities } = useApi();
-  const [pointBalance, setPointBalance] = useState(0);
+  const [stats, setStats] = useState(0);
   const [taskProgress, setTaskProgress,getReferralStatus] = useState(0);
-  const [ referralStatus,setReferralStatus] = useState( 0)
+  const [ referralStatus,setReferralStatus] = useState(0)
   const [recentActivity,setRecentActivity] = useState([]);
 
     
   useEffect(() =>{
   const  fechPointBalance = async () => {
       try {
-        const response = userTaskStats();
-        setPointBalance(response.data.total_points)
-        console.log(pointBalance)
+        const response = userTaskStats(stats);
+        setStats(response.data.total_points)
+        console.log('total',stats)
         setTaskProgress(response.data.task_completion_rate)
-        console.log(taskProgress)
+        console.log('task',taskProgress)
       } catch (error) {
         console.error('err:',error)
       }
@@ -49,13 +49,16 @@ useEffect(() => {
   const fetchReferralStatus = async () =>{
     try {
       const response = await getReferralStatus();
+    
       setReferralStatus(response.data.invitees_count)
       console.log('referrals:',referralStatus)
+      if (referralStatus >= 15) return '15+';
+      return `${referralStatus}/15`;
     } catch (error) {
       console.error('err:',error)
     }
   }
-  fetchReferralStatus()
+  fetchReferralStatus();
 },[])
   return (
     <BaseLayout title="Customer Dashboard">
@@ -63,13 +66,13 @@ useEffect(() => {
       <div className="container">
         <div className="row">
           <div className="col-md-6">
-            <PointBalance balance={pointBalance} />
+            <PointBalance balance={stats} />
           </div>
           <div className="col-md-6">
             <ReferralStatus status={referralStatus} />
           </div>
           <div className="col-md-6">
-            <TaskProgress progress={taskProgress} />
+            <TaskProgress progress={taskProgress}  /> 
           </div>
           
           <div className="col-md-6">

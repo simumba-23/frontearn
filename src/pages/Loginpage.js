@@ -3,10 +3,7 @@ import { Form, InputGroup, Image, Button, Row, Col, Container, Card } from 'reac
 import { Link } from 'react-router-dom';
 import user from '../Assets/user.png';
 import password from '../Assets/password.png';
-import loginlogo from '../Assets/loginlogo.png';
-import simumba from '../Assets/toolsharingsimumba.png';
 import AuthContext from '../context/AuthContext';
-import CookieConsent from '../components/CookieConsent';
 function LoginPage() {
     const { loginUser } = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
@@ -73,18 +70,23 @@ function LoginPage() {
                                     </InputGroup>
                                 </Form.Group>
                                 {error && <p className="text-danger mt-2">{error}</p>}
+                                <div className='d-flex justify-content-between'>
                                 <p className="mt-3">
                                     Don't have an account? <Link to="/Register" className="text-dark text-decoration-none">Register</Link>
                                 </p>
+                                <p className="mt-3 flex-end">
+                                <Link to="/request_password_reset" className="text-dark text-decoration-none"> Forgot Password?</Link>
+                                </p>
+                                </div>
+                            
                                 <Button
-                                    variant="primary"
+                                    style={{background:'#a8e5f0'}}
                                     type="submit"
                                     className="w-100"
                                     disabled={loading}
                                 >
                                     {loading ? 'Logging in...' : 'Login'}
                                 </Button>
-                                <CookieConsent />
                             
                             </Form>
                         </Card.Body>

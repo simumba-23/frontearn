@@ -3,36 +3,45 @@ import Cookies from 'universal-cookie';
 import { Container, Form, Button } from 'react-bootstrap';
 
 const cookies = new Cookies();
+const COOKIE_EXPIRY_DAYS = 365;
 
 const CookieConsent = () => {
-  const [isChecked, setIsChecked] = useState(false);
-  const [consentGiven, setConsentGiven] = useState(false);
+  const [consent, setConsent] = useState({ isChecked: false, given: false });
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
-    // Check if consent cookie already exists
     const cookieConsent = cookies.get('cookieConsent');
     if (cookieConsent) {
-      setConsentGiven(true);
+      setConsent(prevState => ({ ...prevState, given: true }));
     }
   }, []);
 
+  const setCookie = (name, value, days) => {
+    cookies.set(name, value, { path: '/', expires: new Date(Date.now() + days * 24 * 60 * 60 * 1000) });
+  };
+
   const handleCheckboxChange = (e) => {
-    setIsChecked(e.target.checked);
+    setConsent(prevState => ({ ...prevState, isChecked: e.target.checked }));
   };
 
   const handleSubmit = () => {
-    if (isChecked) {
-      cookies.set('cookieConsent', 'true', { path: '/', expires: new Date(Date.now() + 365*24*60*60*1000) }); // 1 year
-      setConsentGiven(true);
+    if (consent.isChecked) {
+      setCookie('cookieConsent', 'true', COOKIE_EXPIRY_DAYS);
+      setConsent(prevState => ({ ...prevState, given: true }));
     } else {
-      alert('Please accept cookies to proceed.');
+      setShowAlert(true);
     }
   };
 
-  if (consentGiven) return null;
+  if (consent.given) return null;
 
   return (
-    <div >
+    <div aria-live="polite">
+      {showAlert && (
+        <div className="alert alert-warning" role="alert">
+          Please accept cookies to proceed.
+        </div>
+      )}
       <Container>
         <p>We use cookies to enhance your experience. Please check the box to consent.</p>
         <Form>
@@ -40,12 +49,15 @@ const CookieConsent = () => {
             type="checkbox"
             label="I accept cookies"
             id="cookieConsent"
-            checked={isChecked}
+            checked={consent.isChecked}
             onChange={handleCheckboxChange}
-            // style={{ color: '#ffffff' }}
+            aria-labelledby="cookieConsentLabel"
           />
           <br />
-          <Button onClick={handleSubmit} variant="primary">Proceed</Button>
+          <Button onClick={handleSubmit} 
+            style={{background:'#a8e5f0'}} 
+
+          >Proceed</Button>
         </Form>
       </Container>
     </div>

@@ -1,11 +1,12 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Row, Col, Card, CardBody, CardText, Button, Alert } from 'react-bootstrap'
+import { Row, Col, Card, CardBody, CardText, Button, Alert, Spinner } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
-import BaseLayout from '../components/BaseLayout'
-import MediaPlayer from '../components/MediaPlayer'
+import BaseLayout from '../../components/AdminBaseLayout'
+import MediaPlayer from '../../components/MediaPlayer'
+import './AdminTaskDetails.css' // Import the new CSS file
 
-const TaskDetails = () => {
+const AdminTaskDetails = () => {
     const [task, setTask] = useState({})
     const [loading, setLoading] = useState(true)
     const [mediaUrl, setMediaUrl] = useState(null);
@@ -14,7 +15,6 @@ const TaskDetails = () => {
     const [isSurveyEnabled, setIsSurveyEnabled] = useState(false);
     const { taskId } = useParams()
     const API_URL = process.env.REACT_APP_API_URL;
-
 
     useEffect(() => {
         const fetchTask = async () => {
@@ -31,25 +31,22 @@ const TaskDetails = () => {
             }
         }
         fetchTask()
-    }, [])
+    }, [API_URL, taskId])
 
     const handleEnd = () => {
         setIsSurveyEnabled(true);
-        setCompletionMessage("Congraturations you have completed tasks then take survey to earn reward")
+        setCompletionMessage("Congratulations! You have completed the task. Please take the survey to earn your reward.");
     };
-    
+
     if (loading) {
         return (
-            <BaseLayout>
-                <p>Loading task details...</p>
-            </BaseLayout>
-        )
-    }
-    if (!task){
-        return (
-            <BaseLayout>
-            
-            <p> Loading task details...</p>
+            <BaseLayout title='Task Details'>
+                <div className="loading-spinner">
+                    <Spinner animation="border" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </Spinner>
+                    <p>Loading task details...</p>
+                </div>
             </BaseLayout>
         )
     }
@@ -63,32 +60,28 @@ const TaskDetails = () => {
     }
 
     return (
-        <BaseLayout>
+        <BaseLayout title='Manage Video'>
             <Row>
-                <Col md={8} className="mx-auto">
+                <Col  className="mx-auto">
                     <Card className="mb-4 shadow-sm">
                         <CardBody>
                             <Row>
-                                <Col md={12}>
-
-                                <MediaPlayer mediaUrl={mediaUrl} onClose={() => {}} onEnd={handleEnd} />
+                                <Col >
+                                    <MediaPlayer mediaUrl={mediaUrl} onClose={() => {}} onEnd={handleEnd} />
                                 </Col>
                             </Row>
                             <Row className="mt-4">
-                                <Col className='d-flex'>
-                                    <CardText as="h5" className='mx-3'>{task.name}</CardText>
-                                    {/* <CardText>{task.description}</CardText> */}
-                                    {/* <CardText>Type: {task.task_type}</CardText> */}
-                                    <CardText>Points Reward: {task.points}</CardText>
-                                
+                                <Col className='d-flex flex-column align-items-start'>
+                                    <CardText as="h5" className='task-name'>{task.name}</CardText>
+                                    <CardText className='task-points'>Points Reward: {task.points}</CardText>
                                 </Col>
-                                {completionMessage && <Alert className="mt-3" variant="success">{completionMessage}</Alert>}
-
-                                {isSurveyEnabled && (
-                                <Button variant="primary" href={`/surveys/${taskId}/task`} className="survey-button">
-                                Take Survey
-                                </Button>)}
                             </Row>
+                            {completionMessage && <Alert className="mt-3" variant="success">{completionMessage}</Alert>}
+                            {isSurveyEnabled && (
+                                <Button variant="primary" href={`/surveys/${taskId}/task`} className="mt-3 survey-button">
+                                    Take Survey
+                                </Button>
+                            )}
                         </CardBody>
                     </Card>
                 </Col>
@@ -97,4 +90,4 @@ const TaskDetails = () => {
     )
 }
 
-export default TaskDetails
+export default AdminTaskDetails

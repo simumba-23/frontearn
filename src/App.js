@@ -4,20 +4,21 @@ import Loginpage from './pages/Loginpage';
 import Registerpage from './pages/Registerpage';
 import Admindashboard from './pages/Admindashboard';
 import PrivateRoute from './components/PrivateRoute';
-import CustomerList from './pages/CustomerList';
-import AddTask from './pages/AddTask';
-import TransactionPage from './pages/TransactionPage';
-import { AdminTransactions } from './pages/AdminTransactions';
+import CustomerList from './admin_site/CustomerList';
+import AddTask from './pages/AdminTasks/AddTask';
+import RecentActivityFeed from './customer_dashboard/RecentActivityFeed';
+
+import { AdminTransactions } from './admin_site/dashadmin';
 import { TaskCategory } from './pages/TaskCategory';
 import { CustomerTasks } from './pages/CustomerTasks';
 import VideoTask from './pages/VideoTask';
 import MusicTask from './pages/MusicTask';
 import TaskList from './pages/TaskList';
-import { ManageMusicTask } from './pages/ManageMusicTask';
+import { ManageMusicTask } from './pages/AdminTasks/ManageMusicTask';
 import { Faqs } from './components/Faqs';
-import AdminTaskList from './pages/AdminTaskList';
-import { ManageVideoTask } from './pages/ManageVideoTask';
-import { ManagePodcastTask } from './pages/ManagePodcastTask';
+import AdminTaskList from './pages/AdminTasks/AdminTaskList';
+import { ManageVideoTask } from './pages/AdminTasks/ManageVideoTask';
+import { ManagePodcastTask } from './pages/AdminTasks/ManagePodcastTask';
 import AddSurvey from './pages/AddSurvey';
 import AddQuestion from './pages/AddQuestions';
 import AddAnswerOption from './pages/AddAnswerOption';
@@ -47,28 +48,37 @@ import Leaderboard from './accounts/Leaderboard';
 import { PayList } from './accounts/PayList';
 import { WaitList } from './accounts/WaitList';
 import TestimonialPage from './testmonial/TestmonialPage';
-import UserHistory from './accounts/UserHistory';
 import Customerdashboard from './customer_dashboard/Customerdashboard';
+import Users from './admin_site/Users';
+import { Dashpayment } from './admin_site/Dashpayment';
+import UserInfo from './admin_site/UserProfile';
+import { AdminSettings } from './admin_site/AdminSettings';
+import RevenueManagementPage from './revenue/RevenueManagementPage';
+import { PayListAdmin } from './admin_site/PayListadmin';
+import { WaitListAdmin } from './admin_site/WaitlistAdmin';
+import AdminTaskDetails from './pages/AdminTasks/AdminTaskDetails';
+import ForgotPassword from './pages/ForgotPasswordForm';
+import ResetPassword from './pages/ResetPassword';
+import RewardCreate from './rewards/RewardCreate';
+import RewardList from './rewards/RewardList';
+import Notification from './notifications/notify';
+import UserHistory from './accounts/UserHistory';
 const App = () =>{ 
-  return(
-  
+    return(
     <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/Login" element={<Loginpage />} />
         <Route path="/Register" element={<Registerpage />} />
         <Route path="/AddTask" element={<AddTask />} />
-        <Route path="/TransactionSummary" element={<TransactionPage />} />
-        {/* <Route path="/Dashboard" element={<PrivateRoute element={Dashboardpage} />} /> */}
         <Route path="/Admin" element={<PrivateRoute> <Admindashboard /> </PrivateRoute> }  />
         <Route path="/Customer" element={<PrivateRoute> <Customerdashboard /> </PrivateRoute> } />
-        <Route path="/Customer-List" element={<CustomerList />} />
-        <Route path="/AdminTransactions" element={<AdminTransactions />} />
+        <Route path="/pending_withdraws" element={<CustomerList />} />
+        <Route path="/AdminInfo" element={<AdminTransactions />} />
         <Route path="/Categorys" element={<TaskCategory />} />
         <Route path="/tasks/Video" element={<VideoTask />} />
         <Route path="/tasks/Music" element={<MusicTask />} />
         <Route path="/task/:taskId" element={ <TaskDetails />} />
-
-
+        <Route path="/admintasks/:taskId" element = { <AdminTaskDetails />} />
         <Route path="/tasks/:taskType?" element={TaskList} />
         <Route path="/Manage/:taskType?" element={< AdminTaskList />} />
         <Route path="/Manage/Music" element={< ManageMusicTask />} />
@@ -102,6 +112,22 @@ const App = () =>{
         <Route path='/waitlist' element = { <WaitList />} />
         <Route path='/testmonial' element= { <TestimonialPage />} />
         <Route path='/userhistory' element = {< UserHistory />} />
+        <Route path='/users_list' element={<Users />} />
+        <Route path = '/account_settings' element ={ <AdminSettings />} />
+        <Route path = '/account_profile' element={<UserInfo />} />
+        <Route path = '/revenue' element={ <RevenueManagementPage />} />
+        <Route path = '/payout_list' element = { <PayListAdmin />} />
+        <Route path = '/payout_waitlist' element = { <WaitListAdmin />} />
+        <Route path='/payment' element={<Dashpayment />} />
+        <Route path= '/request_password_reset' element={<ForgotPassword />} />
+        <Route path='/reset_password' element = { <ResetPassword />} />
+        <Route path='create_rewards' element = {<RewardCreate />} />
+        <Route path = '/rewards' element ={ <RewardList />} />
+        <Route path='/notifications' element = { <Notification />} />
+        <Route path='/userhistory' element = { <UserHistory />} />
+        <Route path='/recentactivities' element ={ < RecentActivityFeed />} />
+
+        
         <Route 
                     path="/blogs/:id" 
                     element={

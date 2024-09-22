@@ -1,91 +1,147 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Card, Button, Container, Row, Col, Pagination } from 'react-bootstrap';
+import { Card, Button, Container, Row, Col, Pagination, Alert, Spinner, Form } from 'react-bootstrap';
+import SearchBar from './SearchBar';
 import { BlogCategories } from './BlogCategories';
-import FeaturedBlog from './FeaturedBlog';
-// import RecentPosts from './RecentPosts'; // Uncomment if using RecentPosts component
+import DOMPurify from 'dompurify';
 
 const BlogList = () => {
     const [blogs, setBlogs] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState(null); // Add state for selected category
+
+    const blogsPerPage = 5;
+    const API_URL = process.env.REACT_APP_API_URL;
+    const BASE_URL = 'http://127.0.0.1:8000';
 
     useEffect(() => {
         const fetchBlogs = async () => {
             setLoading(true);
+            setError(null);
             try {
-                const response = await axios.get(`https://earn-app.onrender.com/api/blogs?page=${currentPage}&limit=10`);
-                setBlogs(response.data.results); // Adjust based on the response structure
-                setTotalPages(response.data.total_pages); // Adjust based on the response structure
+                const response = await axios.get(`${API_URL}/blogs`);
+                setBlogs(response.data);
             } catch (error) {
+                setError('There was an error fetching the blog data!');
                 console.error('There was an error fetching the blog data!', error);
             } finally {
                 setLoading(false);
             }
         };
         fetchBlogs();
-    }, [currentPage]);
+    }, [API_URL]);
 
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
     };
 
-    const BASE_URL = 'http://127.0.0.1:8000/';
+    const handleCategorySelect = async (categoryId) => {
+        setSelectedCategory(categoryId);
+        setLoading(true);
+        try {
+            const response = await axios.get(`${API_URL}/blog_category/${categoryId}/category`);
+            setBlogs(response.data);
+        } catch (error) {
+            setError('There was an error fetching the blogs for the selected category!');
+            console.error('There was an error fetching the blogs for the selected category!', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const filteredBlogs = blogs.filter(blog => 
+        blog.title.toLowerCase().includes(searchQuery.toLowerCase())
+        // You can add more filters here if needed
+    );
+
+    const indexOfLastBlog = currentPage * blogsPerPage;
+    const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
+    const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
+    const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
+
+    if (filteredBlogs.length === 0) {
+        return (
+            <>
+                <Spinner animation='border'/>
+                <Alert variant='info'>No tasks available.</Alert>
+                <Button variant="primary" as={Link} to='/blogs' style={{ background: "#a7d6d9" }}>
+                                                    Back to Blogs
+                                                </Button>
+
+            </>
+        );
+    }
+
     return (
         <Container>
-            <BlogCategories />
-
-            <h4 className="my-2">About Our Blog</h4>
-            <p>
-                Welcome to our blog! Here you will find a variety of articles on topics that interest us, including technology, lifestyle, and more. Stay tuned for our latest updates and insights.
-            </p>
-            <FeaturedBlog />
-            {/* <RecentPosts /> Uncomment if using RecentPosts component */}
-            <h4 className="my-4">Blog List</h4>
+            <BlogCategories onSelectCategory={handleCategorySelect} />
             {loading ? (
-                <p>Loading...</p>
+                <div className="text-center my-5">
+                    <Spinner animation="border" />
+                    <p>Loading...</p>
+                </div>
+            ) : error ? (
+                <Alert variant="danger">{error}</Alert>
             ) : (
                 <>
-                    <Row>
-                        {blogs.map(blog => (
-                            <Col md={6} lg={4} className="mb-4" key={blog.id}>
-                                <Link to={`/blogs/${blog.id}`} style={{ textDecoration: 'none' }}>
-                                    <Card className='shadow-lg'>
-                                        <Card.Img
-                                            variant="top"
-                                            src={`${BASE_URL}${blog.image_url}`}
-                                            alt={blog.title}
-                                            style={{ width: '100%', height: '200px', objectFit: 'cover' }}
-                                        />
-                                        <Card.Body>
-                                            <Card.Title>{blog.title}</Card.Title>
-                                            <Card.Text>{blog.content.substring(0, 100)}...</Card.Text>
-                                            <Button variant="primary" as={Link} to={`/blogs/${blog.id}`}>
-                                                Read More
-                                            </Button>
-                                        </Card.Body>
-                                    </Card>
-                                </Link>
-                            </Col>
+                    <Row className='mt-3'>
+                        <Form.Control
+                            type="text"
+                            placeholder="Search tasks..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="mb-4"
+                        />
+                        {currentBlogs.map(blog => (
+                            <div className="mb-4" key={blog.id}>
+                                <Card className="shadow-lg">
+                                    <Card.Body>
+                                        <Row>
+                                            <Col md={5}>
+                                                <Card.Img
+                                                    variant="top"
+                                                    src={`${BASE_URL}${blog.image_url}`}
+                                                    alt={blog.title}
+                                                    style={{ width: '100%' }}
+                                                />
+                                            </Col>
+                                            <Col md={7}>
+                                                <Card.Title>{blog.title}</Card.Title>
+                                                <Card.Subtitle className="font-italic">
+                                                    {blog.author_name}, {new Date(blog.created_at).toLocaleString()}
+                                                </Card.Subtitle>
+                                                <Card.Text dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content.substring(0, 100)) }} />
+                                                <Button variant="primary" as={Link} to={`/blogs/${blog.id}`} style={{ background: "#a7d6d9" }}>
+                                                    Read More
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    </Card.Body>
+                                </Card>
+                            </div>
                         ))}
                     </Row>
-                    <Pagination>
+                    <Pagination className="justify-content-center mt-4">
                         <Pagination.Prev
-                            onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
                         />
-                        {[...Array(totalPages).keys()].map(page => (
+                        {Array.from({ length: totalPages }, (_, index) => (
                             <Pagination.Item
-                                key={page + 1}
-                                active={page + 1 === currentPage}
-                                onClick={() => handlePageChange(page + 1)}
+                                key={index + 1}
+                                active={index + 1 === currentPage}
+                                onClick={() => handlePageChange(index + 1)}
                             >
-                                {page + 1}
+                                {index + 1}
                             </Pagination.Item>
                         ))}
                         <Pagination.Next
-                            onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)}
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages}
                         />
                     </Pagination>
                 </>

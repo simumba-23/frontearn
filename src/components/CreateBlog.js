@@ -5,12 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import BaseLayout from './AdminBaseLayout';
 import useApi from '../useApi';
 import Select from 'react-select';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const CreateBlog = () => {
     const [blogData, setBlogData] = useState({
         title: '',
         content: '',
-        image:null,
+        image_url: null,
         categories: [],
         tags: [],
     });
@@ -18,14 +20,15 @@ const CreateBlog = () => {
     const [tags, setTags] = useState([]);
     const { createBlog } = useApi();
     const navigate = useNavigate();
+    const API_URL = process.env.REACT_APP_API_URL;
 
     // Fetch categories and tags when component mounts
     useEffect(() => {
         const fetchCategoriesAndTags = async () => {
             try {
                 const [categoriesResponse, tagsResponse] = await Promise.all([
-                    axios.get('https://earn-app.onrender.com/api/categories'),
-                    axios.get('https://earn-app.onrender.com/api/tags')
+                    axios.get(`${API_URL}/categories`),
+                    axios.get(`${API_URL}/tags`)
                 ]);
                 setCategories(categoriesResponse.data);
                 setTags(tagsResponse.data);
@@ -35,13 +38,20 @@ const CreateBlog = () => {
         };
 
         fetchCategoriesAndTags();
-    }, []);
+    }, [API_URL]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setBlogData({
             ...blogData,
             [name]: value
+        });
+    };
+
+    const handleContentChange = (value) => {
+        setBlogData({
+            ...blogData,
+            content: value
         });
     };
 
@@ -52,16 +62,25 @@ const CreateBlog = () => {
             [name]: values
         });
     };
+
     const handleFileChange = (e) => {
         setBlogData({
             ...blogData,
-            image: e.target.files[0] // Update this line
+            image_url: e.target.files[0] // Update this line
         });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        createBlog(blogData).then(response => {
+        const formData = new FormData();
+        formData.append('title', blogData.title);
+        formData.append('content', blogData.content);
+        formData.append('image_url', blogData.image_url);
+        blogData.categories.forEach(category => formData.append('categories', category));
+        blogData.tags.forEach(tag => formData.append('tags', tag));
+    
+
+        createBlog(formData).then(response => {
             console.log('data:', response.data);
             navigate('/blogs');
         }).catch(error => {
@@ -72,10 +91,10 @@ const CreateBlog = () => {
     };
 
     return (
-        <BaseLayout>
-            <Container>
-                <h1>Create a New Blog</h1>
-                <Form onSubmit={handleSubmit}>
+        <BaseLayout title='Create a New Blog'>
+            <Container >
+                {/* <h1>Create a New Blog</h1> */}
+                <Form onSubmit={handleSubmit} encType='multipart/form-data'>
                     <Form.Group controlId="blogTitle">
                         <Form.Label>Title</Form.Label>
                         <Form.Control
@@ -88,13 +107,20 @@ const CreateBlog = () => {
                     </Form.Group>
                     <Form.Group controlId="blogContent" className="mt-3">
                         <Form.Label>Content</Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            rows={5}
-                            name="content"
+                        <ReactQuill
                             value={blogData.content}
-                            onChange={handleChange}
+                            onChange={handleContentChange}
                             placeholder="Enter the blog content"
+                            modules={{
+                                toolbar: [
+                                    [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                    [{ 'align': [] }],
+                                    ['link', 'image'],
+                                    ['clean']
+                                ],
+                            }}
                         />
                     </Form.Group>
                     <Form.Group controlId="blogCategories" className="mt-3">
@@ -135,7 +161,7 @@ const CreateBlog = () => {
                         <Form.Label>Image</Form.Label>
                         <Form.Control
                             type="file"
-                            name="image"
+                            name="image_url"
                             onChange={handleFileChange} 
                         />
                     </Form.Group>

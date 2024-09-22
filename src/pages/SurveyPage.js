@@ -5,10 +5,12 @@ const SurveyPage = () => {
     const [currentTask, setCurrentTask] = useState(null)
     const [survey, setSurvey] = useState(null)
     const [answers, setAnswers] = useState([])
+    const API_URL = process.env.REACT_APP_API_URL;
+    
 
     const fetchSurvey = async (task) => {
         try {
-            const response = await axios.get(`https://earn-app.onrender.com/api/survey/${task.id}`)
+            const response = await axios.get(`${API_URL}/survey/${task.id}`)
 
             setSurvey(response.data)
             console.log('Survey data:', response.data)
@@ -79,7 +81,7 @@ const SurveyPage = () => {
                                 </Form.Group>
                             ))}
                             <Button variant="primary" type="submit">
-                                Submit Answers
+                                Claim Points
                             </Button>
                         </Form>
                     )}

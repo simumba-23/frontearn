@@ -3,82 +3,19 @@ import BaseLayout from '../components/BaseLayout';
 import AuthContext from '../context/AuthContext';
 import PointBalance from './PointBalance';
 import RecentActivityFeed from './RecentActivityFeed';
-import ReferralStatus from './ReferalStatus';
-import TaskProgress from './TaskProgress';
+import ReferralStatus from './ReferalStatus'; // Corrected import
 import useApi from '../useApi';
+import TransactionSummary from '../pages/customerTransactions';
+import UserHistory from '../accounts/UserHistory';
 
 const Customerdashboard = () => {
   const { user } = useContext(AuthContext);
-  const { userTaskStats,getRecentActivities } = useApi();
-  const [stats, setStats] = useState(0);
-  const [taskProgress, setTaskProgress,getReferralStatus] = useState(0);
-  const [ referralStatus,setReferralStatus] = useState(0)
-  const [recentActivity,setRecentActivity] = useState([]);
-
-    
-  useEffect(() =>{
-  const  fechPointBalance = async () => {
-      try {
-        const response = userTaskStats(stats);
-        setStats(response.data.total_points)
-        console.log('total',stats)
-        setTaskProgress(response.data.task_completion_rate)
-        console.log('task',taskProgress)
-      } catch (error) {
-        console.error('err:',error)
-      }
-  }
-  fechPointBalance ();
-},[])
-
-useEffect(() =>{
-  const fetchRecentActivities = async () =>{
-    try {
-    const response = await getRecentActivities();
-    setRecentActivity(response.data)
-    console.log('data:', recentActivity)
-
-    } catch (error) {
-      console.error('err:',error)
-    }
-    
-  }
-  fetchRecentActivities();
-},[])
-useEffect(() => {
-  const fetchReferralStatus = async () =>{
-    try {
-      const response = await getReferralStatus();
-    
-      setReferralStatus(response.data.invitees_count)
-      console.log('referrals:',referralStatus)
-      if (referralStatus >= 15) return '15+';
-      return `${referralStatus}/15`;
-    } catch (error) {
-      console.error('err:',error)
-    }
-  }
-  fetchReferralStatus();
-},[])
   return (
-    <BaseLayout title="Customer Dashboard">
-      <p>Hi, {user.username}, welcome to earn cash by spending time in our app.</p>
+    <BaseLayout title="Dashboard">
+      {/* <p>Hi, {user.username}, welcome to earn cash by spending time in our app.</p> */}
       <div className="container">
         <div className="row">
-          <div className="col-md-6">
-            <PointBalance balance={stats} />
-          </div>
-          <div className="col-md-6">
-            <ReferralStatus status={referralStatus} />
-          </div>
-          <div className="col-md-6">
-            <TaskProgress progress={taskProgress}  /> 
-          </div>
-          
-          <div className="col-md-6">
-            <RecentActivityFeed activities={recentActivity} />
-          </div>
-
+          <TransactionSummary />
         </div>
       </div>
     </BaseLayout>

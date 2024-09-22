@@ -1,0 +1,43 @@
+/* General Card Styling */
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.task-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.task-points {
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+.survey-button {
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.survey-button:hover {
+    background-color: #0056b3;
+}
+
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.alert-success {
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+}

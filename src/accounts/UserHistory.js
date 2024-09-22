@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Card, ListGroup } from 'react-bootstrap';
 import useApi from '../useApi';
+import BaseLayout from '../components/BaseLayout';
 
 const UserHistory = () => {
   const [earnings, setEarnings] = useState([]);
@@ -23,8 +24,8 @@ const UserHistory = () => {
   }, []);
 
   return (
-    <Container>
-      <h2 className="my-3">Your History</h2>
+    <BaseLayout title='Your History' >
+      <Container>
       
       <Row>
         <Col md={6}>
@@ -60,6 +61,9 @@ const UserHistory = () => {
         </Col>
       </Row>
     </Container>
+    
+    </BaseLayout>
+  
   );
 };
 

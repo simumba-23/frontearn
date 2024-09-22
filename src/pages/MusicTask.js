@@ -7,12 +7,10 @@ import SpotifyPlayer from '../components/SpotifyPlayer'
 const MusicTask = () => {
 
     return (
-        <>
+    <>
     <TaskList taskType='Audio' 
-
     filterCondition={(task) => task.media_url && task.media_url.includes("youtube.com")}/>
     </>
-
     )
 }
 

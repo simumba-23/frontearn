@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react';
-import { jwtDecode } from 'jwt-decode'; // Ensure you are importing jwt-decode correctly
+import {jwtDecode} from 'jwt-decode'; // Ensure you are importing jwt-decode correctly
 import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
@@ -30,19 +30,25 @@ export const AuthProvider = ({ children }) => {
             setAuthTokens(data);
             const decodedUser = jwtDecode(data.access);
             setUser(decodedUser);
-            console.log('data',decodedUser)
-            console.log(data.access)
 
             if (decodedUser.role.includes('admin')) {
-                navigate('/Admin');
+                navigate('/AdminInfo');
             } else if (decodedUser.role.includes('customer')) {
                 navigate('/Customer');
             } else {
                 navigate('/'); 
             }
         } else {
-            if (response.status === 401 && data.detail === "No active account found with the given credentials") {
-                alert('Please check your credentials.');
+            if (response.status === 401) {
+                if (data.detail === 'This account is banned.') {
+                    alert('Your account has been banned. Please contact support.');
+                } else if (data.detail === 'This account is suspended.') {
+                    alert('Your account has been suspended. Please contact support.');
+                } else if (data.detail === 'No active account found with the given credentials') {
+                    alert('Please check your credentials.');
+                } else {
+                    alert('Something went wrong while logging in. Please try again later.');
+                }
             } else {
                 alert('Something went wrong while logging in. Please try again later.');
             }
@@ -50,26 +56,19 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logoutUser = useCallback((e) => {
-        e.preventDefault();
+        e && e.preventDefault();
         localStorage.removeItem('authTokens');
         setAuthTokens(null);
         setUser(null);
         navigate('/Login');
     }, [navigate]);
 
-    const contextData = {
-        user: user,
-        authTokens: authTokens,
-        loginUser: loginUser,
-        logoutUser: logoutUser
-    };
-
     useEffect(() => {
         const REFRESH_INTERVAL = 1000 * 60 * 4; // 4 minutes
         const interval = setInterval(() => {
             if (authTokens) {
                 const updateToken = async () => {
-                    const response = await fetch(`${API_URL}/api/token/refresh/`, {
+                    const response = await fetch(`${API_URL}/token/refresh/`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -88,14 +87,30 @@ export const AuthProvider = ({ children }) => {
             
                     if (loading) {
                         setLoading(false);
-                    
                     }
                 };
-            
+                updateToken();
             }
         }, REFRESH_INTERVAL);
         return () => clearInterval(interval);
-    }, [authTokens,loading,logoutUser]);
+    }, [authTokens, loading, logoutUser]);
+
+    useEffect(() => {
+        if (authTokens) {
+            const decodedUser = jwtDecode(authTokens.access);
+            if (decodedUser.status !== 'active') {
+                alert(`Your account is currently ${decodedUser.status}. You will be logged out.`);
+                logoutUser();
+            }
+        }
+    }, [authTokens, logoutUser]);
+
+    const contextData = {
+        user: user,
+        authTokens: authTokens,
+        loginUser: loginUser,
+        logoutUser: logoutUser
+    };
 
     return (
         <AuthContext.Provider value={contextData}>

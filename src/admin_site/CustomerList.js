@@ -10,6 +10,7 @@ const CustomerList = () => {
         axios.get('https://earn-app.onrender.com/api/customers')
             .then(response => {
                 setCustomers(response.data);
+                console.log('data:',response.data)
             })
             .catch(error => {
                 console.error('There was an error fetching the customers!', error);
@@ -17,9 +18,9 @@ const CustomerList = () => {
     }, []);
 
     return (
-        <BaseLayout>
-        <div className="container mt-5">
-            <h1 className="text-center mb-4">Customer List</h1>
+        <BaseLayout title='Pending withdrawals'>
+        <div className="container mt-2">
+            {/* <h1 className="text-center mb-4">Customer List</h1> */}
             <Table striped bordered hover responsive>
                 <thead>
                     <tr>

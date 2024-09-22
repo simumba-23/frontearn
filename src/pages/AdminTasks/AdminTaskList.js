@@ -1,64 +1,70 @@
-import React, { useEffect, useState } from 'react';
-import { Row, Col, Alert, Card, CardBody, CardText, Button, Form } from 'react-bootstrap';
-import BaseLayout from '../components/BaseLayout';
-import MediaPlayer from '../components/MediaPlayer';
-import axios from 'axios';
-import '../App.css'; // Import custom styles
-import FloatingDetailPanel from './FloatingDetailPanel';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { Row, Col, Alert, Card, CardBody, CardText, Button, FormControl, InputGroup } from 'react-bootstrap'
+import BaseLayout from '../../components/AdminBaseLayout'
+import MediaPlayer from '../../components/MediaPlayer'
+import axios from 'axios'
+import '../../App.css' // Import custom styles
+import FloatingDetailPanel from '../FloatingDetailPanel'
+import { useNavigate, Link } from 'react-router-dom'
+import { MdOutlinePlaylistAdd } from 'react-icons/md'
 
-const TaskList = ({ taskType }) => {
-    const [tasks, setTasks] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [completionMessages, setCompletionMessages] = useState('');
-    const [playingMedia, setPlayingMedia] = useState(null);
-    const [selectedTask, setSelectedTask] = useState(null);
-    const [searchQuery, setSearchQuery] = useState('');
-    const navigate = useNavigate();
-    const API_URL = process.env.REACT_APP_API_URL;
+const AdminTaskList = ({ taskType }) => {
+    const [tasks, setTasks] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+    const [completionMessages, setCompletionMessages] = useState('')
+    const [playingMedia, setPlayingMedia] = useState(null)
+    const [selectedTask, setSelectedTask] = useState(null)
+    const [searchTerm, setSearchTerm] = useState('')
+    const navigate = useNavigate()
+    const API_URL = process.env.REACT_APP_API_URL
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${API_URL}/tasks/${taskType ? taskType : ''}`);
-                setTasks(response.data);
-                setLoading(false);
+                const response = await axios.get(`${API_URL}/tasks/${taskType ? taskType : ''}`)
+                setTasks(response.data)
+                setLoading(false)
             } catch (error) {
-                console.error(error);
-                setError('Something went wrong. Please try again!');
-                setLoading(false);
+                console.error(error)
+                setError('Something went wrong. Please try again!')
+                setLoading(false)
             }
-        };
-        fetchData();
-    }, [taskType]);
+        }
+        fetchData()
+    }, [taskType, API_URL])
 
     const handlePlayMedia = (mediaUrl) => {
-        setPlayingMedia(mediaUrl);
-    };
+        setPlayingMedia(mediaUrl)
+    }
 
     const handleCloseMedia = () => {
-        setPlayingMedia(null);
-    };
+        setPlayingMedia(null)
+    }
 
     const handleSelectTask = (task) => {
-        navigate(`/task/${task.id}`);
-    };
+        setSelectedTask(task)
+        navigate(`/admintasks/${task.id}`)
+    }
 
     const handleCloseDetails = () => {
-        setSelectedTask(null);
-    };
+        setSelectedTask(null)
+    }
 
-    const filteredTasks = tasks.filter(task =>
-        task.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value)
+    }
+
+    const filteredTasks = tasks ? tasks.filter(task => 
+        task.name.toLowerCase().includes(searchTerm.toLowerCase())
+    ) : []
 
     if (loading) {
         return (
             <BaseLayout>
                 <p>Loading tasks...</p>
             </BaseLayout>
-        );
+        )
     }
 
     if (error) {
@@ -66,27 +72,36 @@ const TaskList = ({ taskType }) => {
             <BaseLayout>
                 <Alert variant='danger'>{error}</Alert>
             </BaseLayout>
-        );
+        )
     }
 
-    if (filteredTasks.length === 0) {
+    if (tasks.length === 0) {
         return (
-            <BaseLayout title='Tasks Page'>
+            <BaseLayout>
                 <Alert variant='info'>No tasks available.</Alert>
             </BaseLayout>
-        );
+        )
     }
 
     return (
-        <BaseLayout title='Tasks Page'>
+        <BaseLayout title='Manage Tasks'>
             {completionMessages && <Alert variant='success'>{completionMessages}</Alert>}
-            <Form.Control
-                type="text"
-                placeholder="Search tasks..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="mb-4"
-            />
+            <Row className='mb-4'>
+                <Col>
+                    <InputGroup className="mb-3">
+                        <FormControl
+                            placeholder="Search tasks..."
+                            aria-label="Search tasks"
+                            aria-describedby="basic-addon2"
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                        />
+                    </InputGroup>
+                </Col>
+                <Col>
+                    <Button as={Link} to='/AddTask'><MdOutlinePlaylistAdd /> Add Task</Button>
+                </Col>
+            </Row>
             <MediaPlayer mediaUrl={playingMedia} onClose={handleCloseMedia} />
             <FloatingDetailPanel
                 task={selectedTask}
@@ -121,7 +136,7 @@ const TaskList = ({ taskType }) => {
                 </Row>
             ))}
         </BaseLayout>
-    );
-};
+    )
+}
 
-export default TaskList;
+export default AdminTaskList

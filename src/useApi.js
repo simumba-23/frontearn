@@ -1,4 +1,5 @@
 // useApi.js
+// import { actions } from 'react-table';
 import useAxios from './api';
 
 const useApi = () => {
@@ -11,12 +12,11 @@ const useApi = () => {
   const addTask = (taskData) => {
     return axiosInstance.post(`/add-task`, taskData);
   };
-
   const displaySurveys = () => axiosInstance.get(`/surveys`);
   const getWithdrawalRequestList = () => axiosInstance.get('/withdrawal-requests/list')
   const userTaskStats = (stats) => axiosInstance.get('/user_tasks_stats',stats);
   const fetch_admin_reports = (reports) => axiosInstance.get('/admin_reports',reports)
-  const getSurveys = (taskId) => axiosInstance.get(`/surveys/${taskId}/task`);
+  const getSurveys = (taskId) => axiosInstance.get(`/surveys/${taskId}/task`,taskId);
   const createSurvey = (survey) => axiosInstance.post(`/surveys`, survey);
   const getQuestions = (surveyId) => axiosInstance.get(`/surveys/${surveyId}/questions`);
   const createQuestion = (question) => axiosInstance.post(`/surveys/${question.survey}/questions`, question);
@@ -26,7 +26,11 @@ const useApi = () => {
   const withdrawRequest = (amount) => axiosInstance.post('/withdrawal-requests',amount);
   const approve = (id) => axiosInstance.post(`/withdrawal-requests/${id}/approve`);
   const reject = (id) => axiosInstance.post(`/withdrawal-requests/${id}/reject`);
-  const createBlog = (blogData) => axiosInstance.post('/create_blog',blogData);
+  const createBlog = (blogData) => axiosInstance.post('/create_blog',blogData,{
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
   const getReferralLinks = () => axiosInstance.get('/referral-link');
   const getInvitees = () => axiosInstance.get('/invitee-lists');
   const getReferralEarnings = () => axiosInstance.get('/referral-earnings');
@@ -41,6 +45,15 @@ const useApi = () => {
   const getReferralStatus = () => axiosInstance.get ('/referral-status');
   const getRecentActivities = () => axiosInstance.get('/recent-activities');
   const getTaskProgress = () => axiosInstance.get('/task-progress');
+  const getUserList = () => axiosInstance.get('/customers')
+  const bulkActions = (action, userIds) => axiosInstance.post('/bulk-action',{  action,
+    user_ids: userIds});
+const createRewards = (formData) => axiosInstance.post('/create_rewards',formData,{
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
+});
+const getRewardsList = () => axiosInstance.get('/rewards');
 
   return {
     fetchTasks,
@@ -74,7 +87,11 @@ const useApi = () => {
     getRecentActivities,
     getReferralStatus,
     getTaskProgress,
-
+    getUserList,
+    bulkActions,
+    createRewards,
+    getRewardsList,
+  
   };
 };
 

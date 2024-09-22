@@ -20,9 +20,6 @@
   color: white;
   padding: 20px 0;
 
-
-
-
 }
 /* Custom styles for the navbar */
 .navbar-brand {
@@ -33,9 +30,35 @@
   font-size: 1rem;
 }
 
-.navbar-toggler-icon {
-  /* background-image: url('path-to-your-hamburger-icon.svg'); */
+/* Sidebar and Toggler Styles */
+#sidebarMenu {
+  position: fixed;
+  top: 4; /* Corrected from 5 to 0 */
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #f8f9fa;
+  overflow-x: hidden;
+  transition: left 0.3s ease; /* Adjusted transition to be more practical */
+  z-index: 1000;
 }
+
+#sidebarMenu.show {
+  left: 0;
+}
+
+.navbar-toggler {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  z-index: 1100;
+}
+
+.navbar-toggler-icon {
+  font-size: 1.5rem;
+  margin-left: 0;
+}
+
 
 
 
@@ -342,3 +365,35 @@ body.dark-mode {
   text-decoration: underline;
 }
 
+/* App.css */
+@media (max-width: 576px) {
+  .capital, .used, .expenses, .stock, .points, .virtual_money, .completion, .transaction {
+      margin-bottom: 1rem; /* Add spacing between cards on small screens */
+  }
+}
+
+
+/* pagination in users */
+.pagination {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.pagination li a {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.pagination li.active a {
+  background-color: #007bff;
+  color: white;
+}

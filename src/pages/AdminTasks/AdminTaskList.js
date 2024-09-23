@@ -75,13 +75,6 @@ const AdminTaskList = ({ taskType }) => {
         )
     }
 
-    if (tasks.length === 0) {
-        return (
-            <BaseLayout>
-                <Alert variant='info'>No tasks available.</Alert>
-            </BaseLayout>
-        )
-    }
 
     return (
         <BaseLayout title='Manage Tasks'>
@@ -109,7 +102,9 @@ const AdminTaskList = ({ taskType }) => {
                 onPlay={handlePlayMedia}
                 onClick={handleSelectTask}
             />
-            {filteredTasks.map((task) => (
+            {filteredTasks.length > 0 ? (
+                <>
+                {filteredTasks.map((task) => (
                 <Row key={task.id} className="mb-4">
                     <Col>
                         <Card className='shadow-sm' onClick={() => handleSelectTask(task)}>
@@ -135,6 +130,9 @@ const AdminTaskList = ({ taskType }) => {
                     </Col>
                 </Row>
             ))}
+                </>
+            ):<Alert> No task added Yet</Alert>}
+           
         </BaseLayout>
     )
 }

@@ -1,0 +1,33 @@
+/* Sidebar and Toggler Styles */
+#sidebarMenu {
+    position: fixed;
+    top: 4; /* Corrected from 5 to 0 */
+    width: 225px;
+    height: 100%;
+    background-color: #f8f9fa;
+    /* overflow-x: hidden; */
+    transition: left 0.3s ease; /* Adjusted transition to be more practical */
+    z-index: 1000;
+  }
+  
+  .navbar-brand{
+  margin-left: 35px;
+
+  }
+  #sidebarMenu.show {
+    left: 0;
+  }
+  
+  .navbar-toggler {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    z-index: 1100;
+  }
+  
+  .navbar-toggler-icon {
+    font-size: 1.5rem;
+    margin-left: 0;
+  }
+  
+  

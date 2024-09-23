@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Card, Button, Container, Row, Col, Pagination, Alert, Spinner, Form } from 'react-bootstrap';
-import SearchBar from './SearchBar';
 import { BlogCategories } from './BlogCategories';
 import DOMPurify from 'dompurify';
 
@@ -63,19 +62,7 @@ const BlogList = () => {
     const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
     const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
 
-    if (filteredBlogs.length === 0) {
-        return (
-            <>
-                <Spinner animation='border'/>
-                <Alert variant='info'>No tasks available.</Alert>
-                <Button variant="primary" as={Link} to='/blogs' style={{ background: "#a7d6d9" }}>
-                                                    Back to Blogs
-                                                </Button>
-
-            </>
-        );
-    }
-
+    
     return (
         <Container>
             <BlogCategories onSelectCategory={handleCategorySelect} />
@@ -88,7 +75,7 @@ const BlogList = () => {
                 <Alert variant="danger">{error}</Alert>
             ) : (
                 <>
-                    <Row className='mt-3'>
+                    <Row className='mt-2'>
                         <Form.Control
                             type="text"
                             placeholder="Search tasks..."
@@ -96,34 +83,42 @@ const BlogList = () => {
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="mb-4"
                         />
-                        {currentBlogs.map(blog => (
-                            <div className="mb-4" key={blog.id}>
-                                <Card className="shadow-lg">
-                                    <Card.Body>
-                                        <Row>
-                                            <Col md={5}>
-                                                <Card.Img
-                                                    variant="top"
-                                                    src={`${BASE_URL}${blog.image_url}`}
-                                                    alt={blog.title}
-                                                    style={{ width: '100%' }}
-                                                />
-                                            </Col>
-                                            <Col md={7}>
-                                                <Card.Title>{blog.title}</Card.Title>
-                                                <Card.Subtitle className="font-italic">
-                                                    {blog.author_name}, {new Date(blog.created_at).toLocaleString()}
-                                                </Card.Subtitle>
-                                                <Card.Text dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content.substring(0, 100)) }} />
-                                                <Button variant="primary" as={Link} to={`/blogs/${blog.id}`} style={{ background: "#a7d6d9" }}>
-                                                    Read More
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    </Card.Body>
-                                </Card>
-                            </div>
-                        ))}
+                        { filteredBlogs.length > 0 ? (
+                            <>
+                            {currentBlogs.map(blog => (
+                                <div className="mb-4" key={blog.id}>
+                                    <Card className="shadow-lg">
+                                        <Card.Body>
+                                            <Row>
+                                                <Col md={5}>
+                                                    <Card.Img
+                                                        variant="top"
+                                                        src={`${BASE_URL}${blog.image_url}`}
+                                                        alt={blog.title}
+                                                        style={{ width: '100%' }}
+                                                    />
+                                                </Col>
+                                                <Col md={7}>
+                                                    <Card.Title>{blog.title}</Card.Title>
+                                                    <Card.Subtitle className="font-italic">
+                                                        {blog.author_name}, {new Date(blog.created_at).toLocaleString()}
+                                                    </Card.Subtitle>
+                                                    <Card.Text dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content.substring(0, 100)) }} />
+                                                    <Button variant="primary" as={Link} to={`/blogs/${blog.id}`} style={{ background: "#a7d6d9" }}>
+                                                        Read More
+                                                    </Button>
+                                                </Col>
+                                            </Row>
+                                        </Card.Body>
+                                    </Card>
+                                </div>
+                            ))}
+                            </>
+
+                        ): <>
+                        <Alert> This Blog is currently not available </Alert>
+                        </>}
+                    
                     </Row>
                     <Pagination className="justify-content-center mt-4">
                         <Pagination.Prev

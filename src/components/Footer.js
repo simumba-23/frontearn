@@ -9,9 +9,9 @@ const Footer = () => {
     <footer className="footer bg-dark text-white py-4">
       <Container>
         <Row>
-          <Col md={4} className="mb-3 mb-md-0">
+          <Col md={4} className="mb-3 mb-md-0 ">
             <h5>Follow Us</h5>
-            <div className="d-flex">
+            <div className="d-flex justify-content-center">
               <a href="https://wa.me/your_number" className="text-white me-3" target="_blank" rel="noopener noreferrer">
                 <FaWhatsapp size={30} />
               </a>
@@ -37,6 +37,9 @@ const Footer = () => {
               </ListGroup.Item>
               <ListGroup.Item className="bg-dark p-0">
                 <Link to="/faqs" className="text-white text-decoration-none">FAQs</Link>
+              </ListGroup.Item>
+              <ListGroup.Item className="bg-dark p-0">
+                <Link to="/AdminRegister" className="text-white text-decoration-none">Admin</Link>
               </ListGroup.Item>
             </ListGroup>
           </Col>

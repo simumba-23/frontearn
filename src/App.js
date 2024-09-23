@@ -10,7 +10,6 @@ import RecentActivityFeed from './customer_dashboard/RecentActivityFeed';
 
 import { AdminTransactions } from './admin_site/dashadmin';
 import { TaskCategory } from './pages/TaskCategory';
-import { CustomerTasks } from './pages/CustomerTasks';
 import VideoTask from './pages/VideoTask';
 import MusicTask from './pages/MusicTask';
 import TaskList from './pages/TaskList';
@@ -63,6 +62,9 @@ import RewardCreate from './rewards/RewardCreate';
 import RewardList from './rewards/RewardList';
 import Notification from './notifications/notify';
 import UserHistory from './accounts/UserHistory';
+import { CustomerBlogDetails } from './pages/customer/BlogDetails';
+import { CustomerBlogList } from './pages/customer/BlogList';
+import AdminRegister from './admin_site/AdminRegister';
 const App = () =>{ 
     return(
     <Routes>
@@ -84,7 +86,6 @@ const App = () =>{
         <Route path="/Manage/Music" element={< ManageMusicTask />} />
         <Route path="/Manage/Video" element={< ManageVideoTask />} />
         <Route path="/Manage/Podcast" element={<ManagePodcastTask />} />
-        <Route path="/CustomerTasks" element={<CustomerTasks />} />
         <Route path="/surveys/:taskId" element={ <AddSurvey />} />
         <Route path="/surveys/:surveyId/questions/add" element={<AddQuestion />} />
         <Route path="/questions/:questionId/options/add" element={<QuestionList/>} />
@@ -126,6 +127,9 @@ const App = () =>{
         <Route path='/notifications' element = { <Notification />} />
         <Route path='/userhistory' element = { <UserHistory />} />
         <Route path='/recentactivities' element ={ < RecentActivityFeed />} />
+        <Route path = '/blog_details'  element = { < CustomerBlogDetails />} />
+        <Route path = '/blog_list' element = { < CustomerBlogList /> } />
+        <Route path = '/AdminRegister' element = { < AdminRegister /> } />
 
         
         <Route 

@@ -12,12 +12,12 @@ import { IoDocumentText } from "react-icons/io5";
 import userProfile from '../Assets/userProfile.jpg';
 import { MdMonetizationOn } from "react-icons/md";
 import '../App.css';
+import '../SideBar.css'
+
 
 const BaseLayout = ({ children, title }) => {
   const [profileData, setProfileData] = useState(null);
-
   const { user, logoutUser } = useContext(AuthContext);
-
   const [darkMode, setDarkMode] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -41,6 +41,7 @@ const BaseLayout = ({ children, title }) => {
   };
 
   const toggleSidebar = () => {
+    console.log('Sidebar toggle clicked'); // Debugging log
     setIsSidebarOpen(!isSidebarOpen);
   };
 
@@ -53,7 +54,7 @@ const BaseLayout = ({ children, title }) => {
           <header className="navbar navbar-dark sticky-top dash-header flex-md-nowrap p-2 shadow">
             <div className="d-flex align-items-center">
               <button
-                className="navbar-toggler"
+                className="navbar-toggler d-md-none"
                 type="button"
                 onClick={toggleSidebar}
                 aria-controls="sidebarMenu"
@@ -67,44 +68,20 @@ const BaseLayout = ({ children, title }) => {
               </Link>
             </div>
             <div className="navbar-nav flex-row flex-grow-1 justify-content-end">
-              <OverlayTrigger
-                placement="bottom"
-                overlay={<Tooltip id="message-tooltip">Messages</Tooltip>}
-              >
+              <OverlayTrigger placement="bottom" overlay={<Tooltip id="message-tooltip">Messages</Tooltip>}>
                 <Nav.Link as={Link} to="/messages" className="nav-icon">
                   <FaEnvelope />
                 </Nav.Link>
               </OverlayTrigger>
-              <OverlayTrigger
-                placement="bottom"
-                overlay={<Tooltip id="notification-tooltip">Notifications</Tooltip>}
-              >
+              <OverlayTrigger placement="bottom" overlay={<Tooltip id="notification-tooltip">Notifications</Tooltip>}>
                 <Nav.Link as={Link} to="/notifications" className="nav-icon mx-3">
                   <FaBell />
                 </Nav.Link>
               </OverlayTrigger>
-              <NavDropdown
-                align="end"
-                title={
-                  <Image
-                    src={profileImage}
-                    roundedCircle
-                    width="30"
-                    height="30"
-                    alt="Profile"
-                  />
-                }
-                id="profile-dropdown"
-              >
-                <NavDropdown.Item as={NavLink} to="/account_profile">
-                  <CgProfile className="me-2" /> Profile
-                </NavDropdown.Item>
-                <NavDropdown.Item as={NavLink} to="/account_settings">
-                  <FaCog className="me-2" /> Settings
-                </NavDropdown.Item>
-                <NavDropdown.Item onClick={logoutUser}>
-                  <FaSignOutAlt className="me-2" /> Sign out
-                </NavDropdown.Item>
+              <NavDropdown align="end" title={<Image src={profileImage} roundedCircle width="30" height="30" alt="Profile" />} id="profile-dropdown">
+                <NavDropdown.Item as={NavLink} to="/account_profile"><CgProfile className="me-2" /> Profile</NavDropdown.Item>
+                <NavDropdown.Item as={NavLink} to="/account_settings"><FaCog className="me-2" /> Settings</NavDropdown.Item>
+                <NavDropdown.Item onClick={logoutUser}><FaSignOutAlt className="me-2" /> Sign out</NavDropdown.Item>
               </NavDropdown>
             </div>
           </header>
@@ -113,7 +90,7 @@ const BaseLayout = ({ children, title }) => {
             <div className="row">
               <nav
                 id="sidebarMenu"
-                className={`col-md-3 col-lg-2 d-md-block bg-light sidebar ${isSidebarOpen ? 'show' : ''}`}
+                className={`col-md-3 col-lg-2 d-md-block bg-light sidebar ${isSidebarOpen ? 'show' : ''}`} // Add styles for the 'show' class
               >
                 <div className="position-sticky pt-3">
                   <Nav className="flex-column">

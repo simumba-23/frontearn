@@ -1,12 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import BaseLayout from '../components/BaseLayout';
 import AuthContext from '../context/AuthContext';
-import PointBalance from './PointBalance';
-import RecentActivityFeed from './RecentActivityFeed';
-import ReferralStatus from './ReferalStatus'; // Corrected import
-import useApi from '../useApi';
 import TransactionSummary from '../pages/customerTransactions';
-import UserHistory from '../accounts/UserHistory';
 
 const Customerdashboard = () => {
   const { user } = useContext(AuthContext);

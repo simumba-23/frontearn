@@ -68,15 +68,6 @@ const TaskList = ({ taskType }) => {
             </BaseLayout>
         );
     }
-
-    if (filteredTasks.length === 0) {
-        return (
-            <BaseLayout title='Tasks Page'>
-                <Alert variant='info'>No tasks available.</Alert>
-            </BaseLayout>
-        );
-    }
-
     return (
         <BaseLayout title='Tasks Page'>
             {completionMessages && <Alert variant='success'>{completionMessages}</Alert>}
@@ -87,6 +78,9 @@ const TaskList = ({ taskType }) => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="mb-4"
             />
+        
+            {filteredTasks.length > 0 ? 
+            <>
             <MediaPlayer mediaUrl={playingMedia} onClose={handleCloseMedia} />
             <FloatingDetailPanel
                 task={selectedTask}
@@ -95,6 +89,7 @@ const TaskList = ({ taskType }) => {
                 onClick={handleSelectTask}
             />
             {filteredTasks.map((task) => (
+                
                 <Row key={task.id} className="mb-4">
                     <Col>
                         <Card className='shadow-sm' onClick={() => handleSelectTask(task)}>
@@ -111,7 +106,7 @@ const TaskList = ({ taskType }) => {
                                     </Col>
                                     <Col md={6} className='d-flex flex-column justify-content-center'>
                                         <CardText as="h5">{task.name}</CardText>
-                                        <CardText>Type: {task.task_type}</CardText>
+                                        {/* <CardText>Type: {task.task_type}</CardText> */}
                                         <CardText>{task.points} points to earn</CardText>
                                     </Col>
                                 </Row>
@@ -120,6 +115,13 @@ const TaskList = ({ taskType }) => {
                     </Col>
                 </Row>
             ))}
+            
+            </>: <Alert variant='info'>No tasks available.</Alert>
+
+
+        }
+          
+           
         </BaseLayout>
     );
 };

@@ -11,6 +11,8 @@ import AuthContext from '../context/AuthContext';
 import userProfile from '../Assets/userProfile.jpg';
 import useApi from '../useApi';
 import '../App.css';
+import '../SideBar.css'
+import { FaBlog } from 'react-icons/fa6';
 
 const BaseLayout = ({ children, title }) => {
   const [profileData, setProfileData] = useState(null);
@@ -113,6 +115,8 @@ const BaseLayout = ({ children, title }) => {
                       <NavDropdown title={<><FaTasks className="me-2" /> Tasks</>} id="tasks-dropdown">
                         <NavDropdown.Item as={NavLink} to="/tasks/video" activeClassName="active"><FaVideo className="me-2" /> Videos</NavDropdown.Item>
                         <NavDropdown.Item as={NavLink} to="/tasks/music" activeClassName="active"><FaMusic className="me-2" /> Music</NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to="/blog_list" activeClassName="active"><FaBlog className="me-2" /> Blogs </NavDropdown.Item>
+                      
                         <NavDropdown.Item as={NavLink} to="/tasks/survey" activeClassName="active"><FcSurvey className="me-2" /> Surveys</NavDropdown.Item>
                       </NavDropdown>
                     </OverlayTrigger>

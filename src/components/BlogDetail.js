@@ -10,7 +10,7 @@ const BlogDetail = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const API_URL = process.env.REACT_APP_API_URL;
-    const BASE_URL = 'http://127.0.0.1:8000';
+    const BASE_URL = process.env.BASEURL
 
     useEffect(() => {
         const fetchBlog = async () => {

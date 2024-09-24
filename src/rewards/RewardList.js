@@ -3,11 +3,13 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import axios from 'axios';
 import BaseLayout from '../components/BaseLayout';
 import useApi from '../useApi';
+const BASE_URL = process.env.BASE_URL
+
 
 const RewardList = () => {
   const [rewards, setRewards] = useState([]);
   const { getRewardsList } = useApi();
-  const baseURL = 'http://127.0.0.1:8000'; 
+
 
 
   const fetchRewards = async () => {
@@ -31,7 +33,7 @@ const RewardList = () => {
             {rewards.map((reward) => (
           <Col md={4} key={reward.id} className="mb-4">
             <Card>
-              <Card.Img variant="top" src={`${baseURL}${reward.image}`} 
+              <Card.Img variant="top" src={`${BASE_URL}${reward.image}`} 
               style={{
                 backgroundColor: reward.image ? 'transparent' : 'green', // Change background color if no image
                 display: reward.image ? 'block' : 'none' // Hide image if there's no source

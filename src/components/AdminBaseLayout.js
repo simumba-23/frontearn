@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Navbar, Nav, NavDropdown, Container, Tooltip, OverlayTrigger, Image } from 'react-bootstrap';
-import { FaHome, FaLink, FaVideo, FaGift, FaMusic, FaTasks, FaWallet, FaLockOpen, FaMoneyBillWave, FaCog, FaQuestionCircle, FaPhone, FaCommentsDollar, FaSignOutAlt, FaBell, FaEnvelope, FaBlog } from 'react-icons/fa';
+import { FaHome, FaLink, FaVideo, FaGift, FaMusic, FaTasks, FaWallet, FaLockOpen, FaMoneyBillWave, FaCog, FaQuestionCircle, FaPhone, FaCommentsDollar, FaSignOutAlt, FaBell, FaEnvelope, FaBlog, FaList } from 'react-icons/fa';
 import { FcSurvey } from "react-icons/fc";
 import { CgProfile } from "react-icons/cg";
 import { MdPayment } from "react-icons/md";
-import { FaUsers } from "react-icons/fa6";
+import { FaTag, FaUsers } from "react-icons/fa6";
 import { WiMoonAltWaningCrescent3 } from "react-icons/wi";
 import AuthContext from '../context/AuthContext';
 import { IoDocumentText } from "react-icons/io5";
@@ -163,6 +163,25 @@ const BaseLayout = ({ children, title }) => {
                     >
                       <Nav.Link as={NavLink} to="/create_rewards" activeClassName="active">
                         <FaGift className="me-2" /> Rewards
+                      </Nav.Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                      placement="right"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={<Tooltip id="Rewards-tooltip">Add Task and Category </Tooltip>}
+                    >
+                      <Nav.Link as={NavLink} to="/category" activeClassName="active">
+                        <FaList className="me-2" /> Category 
+                      </Nav.Link>
+                    </OverlayTrigger>
+
+                    <OverlayTrigger
+                      placement="right"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={<Tooltip id="Rewards-tooltip">Add Tag </Tooltip>}
+                    >
+                      <Nav.Link as={NavLink} to="/tags" activeClassName="active">
+                        <FaTag className="me-2" />Tag
                       </Nav.Link>
                     </OverlayTrigger>
                     <OverlayTrigger

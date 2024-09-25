@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, Alert, Spinner } from 'react-bootstrap';
 import BaseLayout from '../components/AdminBaseLayout';
 import useApi from '../useApi';
 
@@ -8,25 +8,40 @@ const RewardCreate = ({ fetchRewards }) => {
   const [description, setDescription] = useState('');
   const [pointsRequired, setPointsRequired] = useState('');
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
   const { createRewards } = useApi();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!name.trim() || !description.trim() || !pointsRequired.trim() || !image) {
+      setError("All fields are required");
+      return;
+    }
+
     const formData = new FormData();
     formData.append('name', name);
     formData.append('description', description);
     formData.append('points_required', pointsRequired);
     formData.append('image', image);
 
+    setLoading(true);
+    setError('');
+    setMessage('');
+
     try {
       await createRewards(formData);
       fetchRewards();
+      setMessage('Reward created successfully');
       setName('');
       setDescription('');
       setPointsRequired('');
       setImage(null);
     } catch (error) {
-      console.error('Error creating reward:', error);
+      setError('Error creating reward: ' + error.response?.data?.message || error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -75,8 +90,10 @@ const RewardCreate = ({ fetchRewards }) => {
                   required
                 />
               </Form.Group>
-              <Button variant="primary" className="my-3" type="submit">
-                Create Reward
+              {error && <Alert variant="danger">{error}</Alert>}
+              {message && <Alert variant="success">{message}</Alert>}
+              <Button variant="primary" className="my-3" type="submit" disabled={loading}>
+                {loading ? <Spinner animation="border" size="sm" /> : 'Create Reward'}
               </Button>
             </Form>
           </Col>

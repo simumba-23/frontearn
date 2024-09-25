@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import BaseLayout from '../../components/AdminBaseLayout';
 import useApi from '../../useApi';
-import { Container, Card, Form, Button } from 'react-bootstrap';
+import { Container, Card, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AddTask = () => {
@@ -14,6 +14,10 @@ const AddTask = () => {
         media_url: '',
     });
 
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
+
     const handleChange = (e) => {
         setTaskData({
             ...taskData,
@@ -21,19 +25,31 @@ const AddTask = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        addTask(taskData).then(response => {
-            console.log('Task added', response.data);
+        if (!taskData.name.trim() || !taskData.task_type || !taskData.points || !taskData.media_url.trim()) {
+            setError("All fields are required");
+            return;
+        }
+
+        setLoading(true);
+        setError('');
+        setMessage('');
+
+        try {
+            await addTask(taskData);
+            setMessage('Task added successfully');
             setTaskData({
                 name: '',
                 task_type: '',
                 points: 0,
                 media_url: '',
             });
-        }).catch(error => {
-            console.error("err:", error.response.data);
-        });
+        } catch (error) {
+            setError('Error adding task: ' + (error.response?.data?.message || error.message));
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -91,7 +107,11 @@ const AddTask = () => {
                                     required
                                 />
                             </Form.Group>
-                            <Button type="submit" variant="primary">Add Task</Button>
+                            {error && <Alert variant="danger">{error}</Alert>}
+                            {message && <Alert variant="success">{message}</Alert>}
+                            <Button type="submit" variant="primary" disabled={loading}>
+                                {loading ? <Spinner animation="border" size="sm" /> : 'Add Task'}
+                            </Button>
                         </Form>
                     </Card.Body>
                 </Card>

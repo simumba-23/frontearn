@@ -47,13 +47,16 @@ const useApi = () => {
   const getTaskProgress = () => axiosInstance.get('/task-progress');
   const getUserList = () => axiosInstance.get('/customers')
   const bulkActions = (action, userIds) => axiosInstance.post('/bulk-action',{  action,
-    user_ids: userIds});
+  user_ids: userIds});
 const createRewards = (formData) => axiosInstance.post('/create_rewards',formData,{
   headers: {
     'Content-Type': 'multipart/form-data',
   },
 });
 const getRewardsList = () => axiosInstance.get('/rewards');
+const create_blog_category = (data) => axiosInstance.post('/create_blog_category',data);
+const create_blog_tag = (data) => axiosInstance.post('/create_blog_tag',data);
+
 
   return {
     fetchTasks,
@@ -91,6 +94,8 @@ const getRewardsList = () => axiosInstance.get('/rewards');
     bulkActions,
     createRewards,
     getRewardsList,
+    create_blog_category,
+    create_blog_tag,
   
   };
 };

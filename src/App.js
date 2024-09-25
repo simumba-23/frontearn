@@ -65,6 +65,10 @@ import UserHistory from './accounts/UserHistory';
 import { CustomerBlogDetails } from './pages/customer/BlogDetails';
 import { CustomerBlogList } from './pages/customer/BlogList';
 import AdminRegister from './admin_site/AdminRegister';
+import CategoryForm from './blogs/CategoryForm';
+import TagForm from './blogs/TagForm';
+
+
 const App = () =>{ 
     return(
     <Routes>
@@ -130,6 +134,8 @@ const App = () =>{
         <Route path = '/blog_details'  element = { < CustomerBlogDetails />} />
         <Route path = '/blog_list' element = { < CustomerBlogList /> } />
         <Route path = '/AdminRegister' element = { < AdminRegister /> } />
+        <Route path ='/tags' element = { <TagForm />} />
+        <Route path = '/category' element = { <CategoryForm />} />
 
         
         <Route 

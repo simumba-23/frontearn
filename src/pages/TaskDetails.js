@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Card, CardBody, CardText, Button, Alert } from 'react-bootstrap';
+import { Row, Col, Card, CardBody, CardText, Button, Alert, Spinner } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import BaseLayout from '../components/BaseLayout';
 import MediaPlayer from '../components/MediaPlayer';
+import { GiTwoCoins } from "react-icons/gi";
+import "../App.css"
 
 const TaskDetails = () => {
     const [task, setTask] = useState({});
@@ -43,7 +45,10 @@ const TaskDetails = () => {
     if (loading) {
         return (
             <BaseLayout>
-                <p>Loading task details...</p>
+                <div className="text-center my-5">
+                    <Spinner animation="border" variant="primary" />
+                    <p>Loading task details...</p>
+                </div>
             </BaseLayout>
         );
     }
@@ -67,8 +72,8 @@ const TaskDetails = () => {
     return (
         <BaseLayout>
             <Row>
-                <Col md={8} className="mx-auto">
-                    <Card className="mb-4 shadow-sm">
+                <Col className="mx-auto">
+                    <Card className="mb-4 shadow-lg rounded">
                         <CardBody>
                             <Row>
                                 <Col md={12}>
@@ -76,14 +81,18 @@ const TaskDetails = () => {
                                 </Col>
                             </Row>
                             <Row className="mt-4">
-                                <Col className="d-flex">
-                                    <CardText as="h5" className="mx-3">{task.name}</CardText>
-                                    <CardText>{task.description}</CardText>
-                                    <CardText>Points Reward: {task.points}</CardText>
+                                <Col>
+                                    <CardText as="h5" className="text-primary">{task.name}</CardText>
+                                    <CardText>{task.description} HAHAAHHAHHAHAHAHAHHHHHHHHHHHH</CardText>
+                                    <CardText><GiTwoCoins /> <strong>{task.points}</strong></CardText>
                                 </Col>
-                                {completionMessage && <Alert className="mt-3" variant="success">{completionMessage}</Alert>}
+                                {completionMessage && (
+                                    <Alert variant="success" className="mt-3">
+                                        {completionMessage}
+                                    </Alert>
+                                )}
                                 {isSurveyEnabled && (
-                                    <Button variant="primary" href={`/surveys/${taskId}/task`} className="survey-button">
+                                    <Button variant="primary" href={`/surveys/${taskId}/task`} className="mt-3 w-100">
                                         Take Survey
                                     </Button>
                                 )}

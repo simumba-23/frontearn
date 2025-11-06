@@ -11,9 +11,8 @@ import AuthContext from '../context/AuthContext';
 import { IoDocumentText } from "react-icons/io5";
 import userProfile from '../Assets/userProfile.jpg';
 import { MdMonetizationOn } from "react-icons/md";
-import '../App.css';
 import '../SideBar.css'
-
+import '../App.css';
 
 const BaseLayout = ({ children, title }) => {
   const [profileData, setProfileData] = useState(null);

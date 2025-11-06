@@ -7,7 +7,7 @@ const useApi = () => {
 
   const fetchTasks = (taskType) => {
     return axiosInstance.get(`/tasks`);
-  };
+    };
 
   const addTask = (taskData) => {
     return axiosInstance.post(`/add-task`, taskData);
@@ -19,12 +19,15 @@ const useApi = () => {
   const getSurveys = (taskId) => axiosInstance.get(`/surveys/${taskId}/task`,taskId);
   const createSurvey = (survey) => axiosInstance.post(`/surveys`, survey);
   const getQuestions = (surveyId) => axiosInstance.get(`/surveys/${surveyId}/questions`);
+  const getUserDetails = (id) => axiosInstance.get(`/user/${id}/details`);
+
   const createQuestion = (question) => axiosInstance.post(`/surveys/${question.survey}/questions`, question);
   const getAnswerOptions = (questionId) => axiosInstance.get(`/questions/${questionId}/options`);
   const createAnswerOption = (option) => axiosInstance.post(`/questions/${option.question}/options`, option);
   const submitAnswers = (surveyId, answers) => axiosInstance.post(`/surveys/${surveyId}/submit`, answers);
   const withdrawRequest = (amount) => axiosInstance.post('/withdrawal-requests',amount);
-  const approve = (id) => axiosInstance.post(`/withdrawal-requests/${id}/approve`);
+
+  const approve = (user) => axiosInstance.post(`/withdrawal-requests/${user}/approve`);
   const reject = (id) => axiosInstance.post(`/withdrawal-requests/${id}/reject`);
   const createBlog = (blogData) => axiosInstance.post('/create_blog',blogData,{
     headers: {
@@ -38,6 +41,7 @@ const useApi = () => {
   const changePassword = (passData) => axiosInstance.post('/change-password',passData);
   const generate2fa = () => axiosInstance.get('/generate_2fa_qr_code');
   const verify2fa = (otpCode) => axiosInstance.post('/verify_2fa',otpCode);
+  const send_fcm_token = (token) => axiosInstance.post('register_fcm_token/',{token});
   const getProfileData = () => axiosInstance.get('/profile-details');
   const updateProfileData = (formState) => axiosInstance.put('/profile-details',formState);
   const getLeaderboard = () => axiosInstance.get('/leaderboard');
@@ -45,7 +49,8 @@ const useApi = () => {
   const getReferralStatus = () => axiosInstance.get ('/referral-status');
   const getRecentActivities = () => axiosInstance.get('/recent-activities');
   const getTaskProgress = () => axiosInstance.get('/task-progress');
-  const getUserList = () => axiosInstance.get('/customers')
+  const getUserList = () => axiosInstance.get('/customers');
+  const getOnlineUsers =() => axiosInstance.get('/online-users')
   const bulkActions = (action, userIds) => axiosInstance.post('/bulk-action',{  action,
   user_ids: userIds});
 const createRewards = (formData) => axiosInstance.post('/create_rewards',formData,{
@@ -54,8 +59,10 @@ const createRewards = (formData) => axiosInstance.post('/create_rewards',formDat
   },
 });
 const getRewardsList = () => axiosInstance.get('/rewards');
+const getRewardDetail = (id) => axiosInstance.get(`rewards/${id}/details`)
 const create_blog_category = (data) => axiosInstance.post('/create_blog_category',data);
 const create_blog_tag = (data) => axiosInstance.post('/create_blog_tag',data);
+
 
 
   return {
@@ -71,6 +78,8 @@ const create_blog_tag = (data) => axiosInstance.post('/create_blog_tag',data);
     createAnswerOption,
     submitAnswers,
     userTaskStats,
+    getRewardDetail,
+    getUserDetails,
     withdrawRequest,
     fetch_admin_reports,
     approve,
@@ -96,6 +105,8 @@ const create_blog_tag = (data) => axiosInstance.post('/create_blog_tag',data);
     getRewardsList,
     create_blog_category,
     create_blog_tag,
+    getOnlineUsers,
+    send_fcm_token
   
   };
 };

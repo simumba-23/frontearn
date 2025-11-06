@@ -1,69 +1,47 @@
-import React, { useEffect, useState, useContext } from 'react';
-import useWebSocket from 'react-use-websocket';
-import { Alert, ListGroup, Spinner } from 'react-bootstrap';
-import AuthContext from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { messaging } from "./firebase";
+import { getToken, onMessage } from "firebase/messaging";
+import useApi from "../useApi";
 
-const Notification = () => {
-    const { authTokens } = useContext(AuthContext); // Assuming you have a context providing the token
-    const navigate = useNavigate();
-    const API_URL = process.env.REACT_APP_API_URL;
+const Notify = () => {
+  const { send_fcm_token } = useApi();
 
-    // Check if user is authenticated
-    useEffect(() => {
-        if (!authTokens) {
-            navigate('/login'); // Redirect to login if not authenticated
-        }
-    }, [authTokens, navigate]);
+  const requestPermission = async () => {
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      try {
+        const token = await getToken(messaging, {
+          vapidKey: "BIxGVYdKdPfffD0mNtFXN2Se-7QYuWFteLQS5W7kvoTF85xwxBzqZQ9UDkSI2gOecrNKig0S5cYhG2k9I-G5_gU",
+        });
+        console.log("Generated Token:", token);
 
-    const wsUrl = `${API_URL.replace(/^http/, 'ws')}/ws/notifications/?token=${authTokens?.access}`;
+        // Send the token to the Django backend
+        await send_fcm_token(token);
+      } catch (error) {
+        console.error("Error generating token:", error);
+      }
+    } else if (permission === "denied") {
+      alert("You denied the notification permission.");
+    }
+  };
 
-    const [notifications, setNotifications] = useState([]);
+  useEffect(() => {
+    // Request notification permission
+    requestPermission();
 
-    const { sendMessage, lastMessage, readyState } = useWebSocket(authTokens ? wsUrl : null, {
-        onOpen: () => console.log('WebSocket connection established.'),
-        onClose: () => console.log('WebSocket connection closed.'),
-        onError: (error) => console.log('WebSocket error: ', error),
+    // Handle foreground notifications
+    const unsubscribe = onMessage(messaging, (payload) => {
+      console.log("Foreground Notification Received:", payload);
+      new Notification(payload.notification.title, {
+        body: payload.notification.body,
+        icon: payload.notification.icon,
+      });
     });
 
-    useEffect(() => {
-        if (lastMessage !== null) {
-            setNotifications((prevNotifications) => [...prevNotifications, lastMessage.data]);
-        }
-    }, [lastMessage]);
+    return () => unsubscribe(); // Cleanup on unmount
+  }, []);
 
-    const renderConnectionStatus = () => {
-        switch (readyState) {
-            case WebSocket.CONNECTING:
-                return <Spinner animation="border" variant="primary" />;
-            case WebSocket.OPEN:
-                return <Alert variant="success">Connected</Alert>;
-            case WebSocket.CLOSING:
-                return <Alert variant="warning">Closing...</Alert>;
-            case WebSocket.CLOSED:
-                return <Alert variant="danger">Disconnected</Alert>;
-            case WebSocket.UNDEFINED:
-                return <Alert variant="secondary">Unknown State</Alert>;
-            default:
-                return <Alert variant="info">Connecting...</Alert>;
-        }
-    };
-
-    if (!authTokens) {
-        return <Spinner animation="border" variant="primary" />; // Show loading spinner while checking authentication
-    }
-
-    return (
-        <div>
-            <h2>Notifications</h2>
-            {renderConnectionStatus()}
-            <ListGroup>
-                {notifications.map((notification, index) => (
-                    <ListGroup.Item key={index}>{notification}</ListGroup.Item>
-                ))}
-            </ListGroup>
-        </div>
-    );
+  return <div>blah blah</div>;
 };
 
-export default Notification;
+export default Notify;

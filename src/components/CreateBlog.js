@@ -93,7 +93,6 @@ const CreateBlog = () => {
     return (
         <BaseLayout title='Create a New Blog'>
             <Container >
-                {/* <h1>Create a New Blog</h1> */}
                 <Form onSubmit={handleSubmit} encType='multipart/form-data'>
                     <Form.Group controlId="blogTitle">
                         <Form.Label>Title</Form.Label>

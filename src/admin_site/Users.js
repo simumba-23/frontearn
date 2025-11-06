@@ -12,6 +12,7 @@ import { BiEdit } from 'react-icons/bi';
 import axios from 'axios';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import '../App.css'
+import { Link, useParams } from 'react-router-dom';
 
 const Users = () => {
   const [data, setData] = useState([]);
@@ -20,6 +21,7 @@ const Users = () => {
   const [pageSize, setPageSize] = useState(10);
   const [pageIndex, setPageIndex] = useState(0);
   const [globalFilter, setGlobalFilter] = useState('');
+  const { id} = useParams()
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -119,11 +121,11 @@ const Users = () => {
                 <th>Email</th>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>SignUp Date</th>
+                {/* <th>SignUp Date</th> */}
                 <th>Refferal Status</th>
                 <th>Points</th>
                 <th>Status</th>
-                <th>Actions</th>
+                {/* <th>Actions</th> */}
               </tr>
             </thead>
             <tbody>
@@ -137,15 +139,18 @@ const Users = () => {
                     />
                   </td>
                   <td>{user.id}</td>
-                  <td>{user.username}</td>
+                  <Link to={ `/user/${user.id}/detail`} >
+                  <td  style={{textDecoration:'none'}} >{user.username}</td>
+
+                  </Link>
                   <td>{user.email}</td>
                   <td>{user.first_name}</td>
                   <td>{user.last_name}</td>
-                  <td>{new Date(user.date_joined).toLocaleString() }</td>
+                  {/* <td>{new Date(user.date_joined).toLocaleString() }</td> */}
                   <td>{user.referral_status}</td>
                   <td>{user.total_points_earned}</td>
                   <td>{ user.is_active && !user.is_banned ? <> Active</> :<> Inactive</> }</td>
-                  <td>
+                  {/* <td>
                     <Button onClick={() => handleApprove(user.id)} className='bg-success me-2'>
                     <BiEdit />
                     </Button>
@@ -153,7 +158,7 @@ const Users = () => {
                     <FaTrash /> 
                     </Button>
 
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>

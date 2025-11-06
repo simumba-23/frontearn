@@ -1,43 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import useApi from '../useApi';
-import { Card,Row,Col } from 'react-bootstrap';
+import { Card, Row, Col } from 'react-bootstrap';
 import { FaRegShareFromSquare } from "react-icons/fa6";
+
 const ReferralStatus = () => {
-  const [referralStatus, setReferralStatus] = useState(0);
+  const [referralStatus, setReferralStatus] = useState({
+    invitees_count: 0,
+    status: '0',
+  });
+
   const { getReferralStatus } = useApi();
 
   useEffect(() => {
     const fetchReferralStatus = async () => {
       try {
         const response = await getReferralStatus();
-          setReferralStatus(response.data)  
-          const status = response.data.invitees_count      
-        if (status >= 15) {
-          setReferralStatus('15+');
+        const data = response.data;
+        const inviteesCount = data.invitees_count || 0;
+        let status = data.status;
+
+        // Ensure status is a valid number and handle undefined or non-numeric values
+        if (isNaN(parseInt(status, 10))) {
+          status = '0';
+        } else if (parseInt(status, 10) >= 15) {
+          status = '15+';
         } else {
-          setReferralStatus(`${status}/15`);
+          status = `${status}/15`;
         }
+
+        setReferralStatus({ invitees_count: inviteesCount, status: status });
       } catch (error) {
-        console.error('err:', error);
+        console.error('Error fetching referral status:', error);
       }
     };
+
     fetchReferralStatus();
   }, [getReferralStatus]);
 
   return (
     <Row>
-      <Col >
-      <Card className="card border shadow-sm">
-      <Card.Body >
-<Card.Title style={{fontSize:16}} ><FaRegShareFromSquare className='me-2' />
-Referral Status</Card.Title>
-        <Card.Text >{referralStatus}</Card.Text>
-      </Card.Body>
-    </Card>
+      <Col>
+        <Card className="card border shadow-sm">
+          <Card.Body>
+            <Card.Title style={{ fontSize: 16 }}>
+              <FaRegShareFromSquare className='me-2' />
+              Referral Status
+            </Card.Title>
+            <Card.Text>{referralStatus.status}</Card.Text>
+          </Card.Body>
+        </Card>
       </Col>
-    
     </Row>
-  
   );
 };
 

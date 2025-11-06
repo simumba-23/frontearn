@@ -369,3 +369,188 @@ body.dark-mode {
   background-color: #007bff;
   color: white;
 }
+
+
+/* App.css */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.navbar-dark {
+  background-color: #343a40;
+}
+
+.nav-icon {
+  color: white;
+}
+
+.nav-icon:hover {
+  color: #d4d4d4;
+}
+
+/* .sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: -250px;
+  width: 250px;
+  padding-top: 1rem;
+  background-color: #f8f9fa;
+  transition: all 0.3s;
+  z-index: 1100;
+}
+
+.sidebar.show {
+  left: 0;
+}
+
+.sidebar .nav-link {
+  color: #333;
+}
+
+.sidebar .nav-link.active {
+  font-weight: bold;
+  color: #007bff;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    left: -100%;
+    transition: all 0.3s;
+  }
+
+  .sidebar.show {
+    left: 0;
+  }
+}
+
+.main-content {
+  margin-left: 250px;
+  transition: margin-left 0.3s;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
+
+  .sidebar.show + .main-content {
+    margin-left: 250px;
+  }
+}
+
+.navbar-toggler-icon {
+  font-size: 1.0rem;
+  margin-left: 0;
+  margin-right: 5px;
+}  */
+/* Styling for the search bar */
+/* Task Search Bar */
+.search-bar {
+  font-size: 1.1rem;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-bar:focus {
+  border-color: #007bff;
+  box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
+}
+
+/* Task Cards */
+.task-card {
+  border: none;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.task-row .col-md-6 {
+  text-align: left;
+}
+
+.video-thumbnail {
+  border-radius: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.video-thumbnail:hover {
+  transform: scale(1.05);
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.video-thumbnail:hover + .play-button {
+  opacity: 1;
+}
+
+/* Card Text */
+.task-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.task-card .card-body {
+  padding: 20px;
+}
+
+.task-card .card-body .row {
+  align-items: center;
+}
+
+/* TaskDetails.css */
+.card-body {
+  padding: 20px;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #555;
+}
+
+.text-primary {
+  color: #007bff !important;
+}
+
+button.w-100 {
+  width: 100%;
+  padding: 10px;
+  font-size: 1.1rem;
+  transition: background-color 0.3s;
+}
+
+button.w-100:hover {
+  background-color: #0056b3;
+}
+
+.alert {
+  font-size: 1rem;
+  font-weight: 500;
+}

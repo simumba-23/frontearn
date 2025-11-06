@@ -33,7 +33,7 @@ const BaseLayout = ({ children, title }) => {
       }
     };
     fetchStats();
-  }, [userTaskStats]);
+  }, []);
 
   useEffect(() => {
     const storedMode = localStorage.getItem('darkMode');

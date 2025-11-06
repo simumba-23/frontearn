@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import YouTube from 'react-youtube';
 import SpotifyPlayer from 'react-spotify-player';
 import { Button, Alert, ProgressBar } from 'react-bootstrap';
-import styles from './Media.module.css'
+import styles from './Media.module.css';
+import { MdFullscreen} from "react-icons/md";
+import { MdFullscreenExit } from "react-icons/md";
+import { FaPlay,FaPause} from "react-icons/fa";
+import { FaRegClosedCaptioning } from "react-icons/fa6";
 
 const MediaPlayer = ({ mediaUrl, onClose, onEnd }) => {
     const [player, setPlayer] = useState(null);
@@ -10,6 +14,7 @@ const MediaPlayer = ({ mediaUrl, onClose, onEnd }) => {
     const [error, setError] = useState(null);
     const [isSurveyEnabled, setIsSurveyEnabled] = useState(false);
     const [progress, setProgress] = useState(0);
+    const [isFullscreen, setIsFullscreen] = useState(false);
     const playerRef = useRef(null);
 
     const handleReady = (event) => {
@@ -38,16 +43,46 @@ const MediaPlayer = ({ mediaUrl, onClose, onEnd }) => {
     };
 
     const handleFullscreen = () => {
-        if (playerRef.current.requestFullscreen) {
-            playerRef.current.requestFullscreen();
-        } else if (playerRef.current.webkitRequestFullscreen) {
-            playerRef.current.webkitRequestFullscreen();
-        } else if (playerRef.current.mozRequestFullScreen) {
-            playerRef.current.mozRequestFullScreen();
-        } else if (playerRef.current.msRequestFullscreen) {
-            playerRef.current.msRequestFullscreen();
+        if (!isFullscreen) {
+            if (playerRef.current.requestFullscreen) {
+                playerRef.current.requestFullscreen();
+            } else if (playerRef.current.webkitRequestFullscreen) {
+                playerRef.current.webkitRequestFullscreen();
+            } else if (playerRef.current.mozRequestFullScreen) {
+                playerRef.current.mozRequestFullScreen();
+            } else if (playerRef.current.msRequestFullscreen) {
+                playerRef.current.msRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
         }
     };
+
+    useEffect(() => {
+        const handleFullscreenChange = () => {
+            setIsFullscreen(!!document.fullscreenElement);
+        };
+
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+        document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+        document.addEventListener('msfullscreenchange', handleFullscreenChange);
+
+        return () => {
+            document.removeEventListener('fullscreenchange', handleFullscreenChange);
+            document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+            document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
+            document.removeEventListener('msfullscreenchange', handleFullscreenChange);
+        };
+    }, []);
 
     useEffect(() => {
         if (!player) return;
@@ -126,9 +161,11 @@ const MediaPlayer = ({ mediaUrl, onClose, onEnd }) => {
                 {renderPlayer()}
             </div>
             <div className={styles.playerHeader}>
-                <Button variant="danger" onClick={onClose} size="sm">Close</Button>
-                <Button variant="secondary" onClick={handlePlayPause} size="sm">{isPlaying ? 'Pause' : 'Play'}</Button>
-                <Button variant="secondary" onClick={handleFullscreen} size="sm">Fullscreen</Button>
+                <Button variant="danger" onClick={onClose} size="sm"><FaRegClosedCaptioning /></Button>
+                <Button variant="secondary" onClick={handlePlayPause} size="sm">{isPlaying ? <FaPause /> : <FaPlay />}</Button>
+                <Button variant="secondary" onClick={handleFullscreen} size="sm">
+                    {isFullscreen ? < MdFullscreenExit /> : <MdFullscreen />}
+                </Button>
             </div>
             <ProgressBar className={styles.progress} now={progress} />
         </div>

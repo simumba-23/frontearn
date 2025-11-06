@@ -19,15 +19,16 @@
   }
   
   .navbar-toggler {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    z-index: 1100;
+    /* position: absolute; */
+    /* left: 10px; */
+    /* top: 10px; */
+    /* z-index: 1100; */
   }
   
   .navbar-toggler-icon {
     font-size: 1.5rem;
     margin-left: 0;
-  }
+    margin-right: 5px;
+  } 
   
   

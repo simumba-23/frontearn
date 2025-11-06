@@ -60,13 +60,20 @@ import ForgotPassword from './pages/ForgotPasswordForm';
 import ResetPassword from './pages/ResetPassword';
 import RewardCreate from './rewards/RewardCreate';
 import RewardList from './rewards/RewardList';
-import Notification from './notifications/notify';
 import UserHistory from './accounts/UserHistory';
 import { CustomerBlogDetails } from './pages/customer/BlogDetails';
 import { CustomerBlogList } from './pages/customer/BlogList';
 import AdminRegister from './admin_site/AdminRegister';
 import CategoryForm from './blogs/CategoryForm';
 import TagForm from './blogs/TagForm';
+import ActiveUsers from './admin_site/Active_Users';
+import NewUsers from './admin_site/New_Users';
+import UserDetail from './admin_site/UserDetail';
+import RewardDetail from './rewards/rewardetail';
+import Notify from './notifications/notify';
+import WithdrawalRequests from './admin_site/WithdrawRequests';
+
+
 
 
 const App = () =>{ 
@@ -84,6 +91,9 @@ const App = () =>{
         <Route path="/tasks/Video" element={<VideoTask />} />
         <Route path="/tasks/Music" element={<MusicTask />} />
         <Route path="/task/:taskId" element={ <TaskDetails />} />
+        <Route path="/user/:id/detail" element={ <UserDetail />} />
+        <Route path="/rewards/:id" element={< RewardDetail />} />
+        <Route path="/withdrawalrequest/list" element={< WithdrawalRequests />} />
         <Route path="/admintasks/:taskId" element = { <AdminTaskDetails />} />
         <Route path="/tasks/:taskType?" element={TaskList} />
         <Route path="/Manage/:taskType?" element={< AdminTaskList />} />
@@ -128,7 +138,6 @@ const App = () =>{
         <Route path='/reset_password' element = { <ResetPassword />} />
         <Route path='create_rewards' element = {<RewardCreate />} />
         <Route path = '/rewards' element ={ <RewardList />} />
-        <Route path='/notifications' element = { <Notification />} />
         <Route path='/userhistory' element = { <UserHistory />} />
         <Route path='/recentactivities' element ={ < RecentActivityFeed />} />
         <Route path = '/blog_details'  element = { < CustomerBlogDetails />} />
@@ -136,6 +145,11 @@ const App = () =>{
         <Route path = '/AdminRegister' element = { < AdminRegister /> } />
         <Route path ='/tags' element = { <TagForm />} />
         <Route path = '/category' element = { <CategoryForm />} />
+        <Route path='/active_users' element ={ <ActiveUsers />} />
+        <Route path="/new_users" element ={<NewUsers />} />
+        <Route path="/notifications" element ={<Notify />} />
+
+
 
         
         <Route 

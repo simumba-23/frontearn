@@ -4,7 +4,9 @@ import { FaUsers, FaUserPlus, FaUserCheck, FaTasks, FaPoll, FaCoins, FaDollarSig
 import BaseLayout from '../components/AdminBaseLayout';
 import useApi from '../useApi';
 import '../App.css';
-
+import { Link } from 'react-router-dom';
+import { MdOnlinePrediction } from "react-icons/md";
+import OnlineUsers from './OnlineUsers';
 export const AdminTransactions = () => {
     const [reportData, setReportData] = useState(null);
     const { fetch_admin_reports } = useApi();
@@ -24,7 +26,7 @@ export const AdminTransactions = () => {
 
     if (!reportData) {
         return (
-            <BaseLayout title={'Transactions Summary'}>
+            <BaseLayout title={'Dashboard'}>
                 <Container>
                     <Row>
                         <Col>
@@ -37,10 +39,10 @@ export const AdminTransactions = () => {
     }
 
     return (
-        <BaseLayout title={'Info summary'}>
+        <BaseLayout title={'Dashboard'}>
             <Container className='mt-2'>
                 <Row className="">
-                    <Col xs={12} sm={6} md={4} lg={3}>
+                    <Col xs={12} sm={6} md={4} lg={3} as={Link} to="/users_list" style={{textDecoration:'none'}}>
                         <Card className='capital'>
                             <Card.Body>
                                 <Card.Title>
@@ -50,7 +52,7 @@ export const AdminTransactions = () => {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col xs={12} sm={6} md={4} lg={3}>
+                    <Col xs={12} sm={6} md={4} lg={3} as={Link} to="/new_users" style={{textDecoration:'none'}}>
                         <Card className='capital'>
                             <Card.Body>
                                 <Card.Title>
@@ -60,7 +62,7 @@ export const AdminTransactions = () => {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col xs={12} sm={6} md={4} lg={3}>
+                    <Col xs={12} sm={6} md={4} lg={3} as ={Link} to="/active_users"  style={{textDecoration:'none'}}>
                         <Card className='used'>
                             <Card.Body>
                                 <Card.Title>
@@ -74,9 +76,23 @@ export const AdminTransactions = () => {
                         <Card className='expenses'>
                             <Card.Body>
                                 <Card.Title>
-                                    <FaTasks /> Tasks Created
+                    <FaTasks /> Tasks Created
                                 </Card.Title>
                                 <Card.Text>{reportData.tasks_created_count}</Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col xs={12} sm={6} md={4} lg={3}>
+                        <Card className='expenses'>
+                            <Card.Body>
+                                <Card.Title>
+                    <MdOnlinePrediction />
+                    Online Users
+                                </Card.Title>
+                                <Card.Text>
+                                    <OnlineUsers />
+
+                                </Card.Text>
                             </Card.Body>
                         </Card>
                     </Col>

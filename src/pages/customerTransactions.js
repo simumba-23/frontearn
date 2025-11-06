@@ -17,11 +17,12 @@ const TransactionSummary = () => {
 
   const { userTaskStats } = useApi();
   const [stats, setStats] = useState({
+    task_completion_rate: 0,
     total_points: 0,
     total_tasks: 0,
     completed_tasks: 0,
     wallet_balance: 0,
-    task_completion_rate: 0,
+    // task_completion_rate: 0,
   });
 
   useEffect(() => {
@@ -71,8 +72,9 @@ const TransactionSummary = () => {
             <Card.Title style={{fontSize:16}} ><GiProgression className='me-2' />
             Task Progress</Card.Title>
             <Card.Text>
-            {stats.task_completion_rate} %
-      </Card.Text>
+    {stats.task_completion_rate ? stats.task_completion_rate + " %" : "Loading..."}
+</Card.Text>
+
           </Card.Body>
         </Card>
       </Col>
